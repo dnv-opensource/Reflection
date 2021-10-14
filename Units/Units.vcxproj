@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{063350D1-FB4A-40A4-8711-7106E46ECF4E}</ProjectGuid>
+    <RootNamespace>Units</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UNITS_EXPORT;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4273;4251</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>..</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Services.lib;Formatting.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UNITS_EXPORT;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4273;4251</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>..</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Services.lib;Formatting.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Formatting\DefaultDirectionalLengthFormatterService.cpp" />
+    <ClCompile Include="Formatting\DefaultUnitFormatter.cpp" />
+    <ClCompile Include="Formatting\DimensionFormatter.cpp" />
+    <ClCompile Include="Formatting\ServiceProviderDirectionalLengthFormatterService.cpp" />
+    <ClCompile Include="LengthX.cpp" />
+    <ClCompile Include="LengthY.cpp" />
+    <ClCompile Include="LengthZ.cpp" />
+    <ClCompile Include="Runtime\DatabaseUnitSystem.cpp" />
+    <ClCompile Include="Runtime\DefaultDatabaseUnitProvider.cpp" />
+    <ClCompile Include="Runtime\DefaultInputUnitProvider.cpp" />
+    <ClCompile Include="Runtime\DefaultOutputUnitProvider.cpp" />
+    <ClCompile Include="Runtime\DefaultUnitProvider.cpp" />
+    <ClCompile Include="Runtime\Detail\DivideUnits.cpp" />
+    <ClCompile Include="Runtime\Detail\EmptyUnit.cpp" />
+    <ClCompile Include="Runtime\Detail\FundamentalUnit.cpp" />
+    <ClCompile Include="Runtime\Detail\ListOfFundamentalUnitsWithExponents.cpp" />
+    <ClCompile Include="Runtime\Detail\MultiplyUnits.cpp" />
+    <ClCompile Include="Runtime\Detail\PowerUnit.cpp" />
+    <ClCompile Include="Runtime\Detail\UnitNameModifier.cpp" />
+    <ClCompile Include="Runtime\DoubleWithUnknownUnit.cpp" />
+    <ClCompile Include="Runtime\DynamicPhenomenon.cpp" />
+    <ClCompile Include="Runtime\DynamicQuantity.cpp" />
+    <ClCompile Include="Runtime\FastUnitConverter.cpp" />
+    <ClCompile Include="Runtime\SimplifiedUnit.cpp" />
+    <ClCompile Include="Runtime\TemporaryUnitSystem.cpp" />
+    <ClCompile Include="Runtime\Unit.cpp" />
+    <ClCompile Include="Runtime\UnitComposer.cpp" />
+    <ClCompile Include="Runtime\UnitHasInvalidDimension.cpp" />
+    <ClCompile Include="Runtime\UnitManager.cpp" />
+    <ClCompile Include="Runtime\UnitParser.cpp" />
+    <ClCompile Include="Runtime\UnitSystem.cpp" />
+    <ClCompile Include="Stream\ShowUnitString.cpp" />
+    <ClCompile Include="Stream\StreamUnitSystem.cpp" />
+    <ClCompile Include="Stream\UseUnitSystemFormatter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Acceleration.h" />
+    <ClInclude Include="Angle.h" />
+    <ClInclude Include="Area.h" />
+    <ClInclude Include="AxialStiffness.h" />
+    <ClInclude Include="BendingStiffness.h" />
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="CoupledDamping.h" />
+    <ClInclude Include="CoupledMass.h" />
+    <ClInclude Include="CoupledQuadraticDamping.h" />
+    <ClInclude Include="CoupledQuadraticDampingForce.h" />
+    <ClInclude Include="CoupledQuadraticDampingMoment.h" />
+    <ClInclude Include="CoupledStiffness.h" />
+    <ClInclude Include="Curvature.h" />
+    <ClInclude Include="CurvatureResponseSpectrum.h" />
+    <ClInclude Include="DampingPerUnitLength.h" />
+    <ClInclude Include="Dimension.h" />
+    <ClInclude Include="DisplacementResponseSpectrum.h" />
+    <ClInclude Include="Energy.h" />
+    <ClInclude Include="EnergyDensity.h" />
+    <ClInclude Include="FirstMomentOfArea.h" />
+    <ClInclude Include="ForAllDimensions.h" />
+    <ClInclude Include="ForAllQuantities.h" />
+    <ClInclude Include="Force.h" />
+    <ClInclude Include="ForceEnergyDensity.h" />
+    <ClInclude Include="ForcePerUnitArea.h" />
+    <ClInclude Include="ForcePerUnitAreaPerAngle.h" />
+    <ClInclude Include="ForcePerUnitLength.h" />
+    <ClInclude Include="ForcePerUnitVolume.h" />
+    <ClInclude Include="ForceResponseSpectrum.h" />
+    <ClInclude Include="Formatting\DefaultDirectionalLengthFormatterService.h" />
+    <ClInclude Include="Formatting\DefaultUnitFormatter.h" />
+    <ClInclude Include="Formatting\DimensionFormatter.h" />
+    <ClInclude Include="Formatting\IDirectionalLengthFormatterService.h" />
+    <ClInclude Include="Formatting\IStreamFormatter.h" />
+    <ClInclude Include="Formatting\IUnitFormatter.h" />
+    <ClInclude Include="Formatting\IUnitFormatterService.h" />
+    <ClInclude Include="Formatting\ServiceProviderDirectionalLengthFormatterService.h" />
+    <ClInclude Include="Frequency.h" />
+    <ClInclude Include="IPhenomenon.h" />
+    <ClInclude Include="KinematicViscosity.h" />
+    <ClInclude Include="LambdaApplier.h" />
+    <ClInclude Include="Length.h" />
+    <ClInclude Include="LengthX.h" />
+    <ClInclude Include="LengthY.h" />
+    <ClInclude Include="LengthZ.h" />
+    <ClInclude Include="Mass.h" />
+    <ClInclude Include="MassDensity.h" />
+    <ClInclude Include="MassMomentOfInertia.h" />
+    <ClInclude Include="MassPerUnitArea.h" />
+    <ClInclude Include="MassPerUnitLength.h" />
+    <ClInclude Include="Math.h" />
+    <ClInclude Include="MomentOfForce.h" />
+    <ClInclude Include="MomentOfForceEnergyDensity.h" />
+    <ClInclude Include="MomentResponseSpectrum.h" />
+    <ClInclude Include="NamedQuantity.h" />
+    <ClInclude Include="Pressure.h" />
+    <ClInclude Include="QuadraticDampingPerUnitLength.h" />
+    <ClInclude Include="Quantity.h" />
+    <ClInclude Include="QuantityBase.h" />
+    <ClInclude Include="RotationalAcceleration.h" />
+    <ClInclude Include="RotationalDamping.h" />
+    <ClInclude Include="RotationalFlexibility.h" />
+    <ClInclude Include="RotationalQuadraticDamping.h" />
+    <ClInclude Include="RotationalResponseSpectrum.h" />
+    <ClInclude Include="RotationalStiffness.h" />
+    <ClInclude Include="RotationalStiffnessPerUnitLength.h" />
+    <ClInclude Include="RotationalVelocity.h" />
+    <ClInclude Include="RotationPerLength.h" />
+    <ClInclude Include="Runtime\DatabaseUnitSystem.h" />
+    <ClInclude Include="Runtime\DefaultDatabaseUnitProvider.h" />
+    <ClInclude Include="Runtime\DefaultInputUnitProvider.h" />
+    <ClInclude Include="Runtime\DefaultOutputUnitProvider.h" />
+    <ClInclude Include="Runtime\DefaultUnitProvider.h" />
+    <ClInclude Include="Runtime\Detail\AddExponentToLastTerm.h" />
+    <ClInclude Include="Runtime\Detail\DivideUnits.h" />
+    <ClInclude Include="Runtime\Detail\EmptyUnit.h" />
+    <ClInclude Include="Runtime\Detail\FundamentalUnit.h" />
+    <ClInclude Include="Runtime\Detail\IUnit.h" />
+    <ClInclude Include="Runtime\Detail\ListOfFundamentalUnitsWithExponents.h" />
+    <ClInclude Include="Runtime\Detail\MultiplyUnits.h" />
+    <ClInclude Include="Runtime\Detail\PowerUnit.h" />
+    <ClInclude Include="Runtime\Detail\UnitMatcher.h" />
+    <ClInclude Include="Runtime\Detail\UnitNameModifier.h" />
+    <ClInclude Include="Runtime\Detail\UnitStringIterator.h" />
+    <ClInclude Include="Runtime\DoubleWithUnknownUnit.h" />
+    <ClInclude Include="Runtime\DynamicDimension.h" />
+    <ClInclude Include="Runtime\DynamicPhenomenon.h" />
+    <ClInclude Include="Runtime\DynamicQuantity.h" />
+    <ClInclude Include="Runtime\FastUnitConverter.h" />
+    <ClInclude Include="Runtime\IDatabaseUnitProvider.h" />
+    <ClInclude Include="Runtime\IInputUnitProvider.h" />
+    <ClInclude Include="Runtime\InputUnitHelper.h" />
+    <ClInclude Include="Runtime\IOutputUnitProvider.h" />
+    <ClInclude Include="Runtime\IUnitProvider.h" />
+    <ClInclude Include="Runtime\SimplifiedUnit.h" />
+    <ClInclude Include="Runtime\TemporaryUnitSystem.h" />
+    <ClInclude Include="Runtime\Unit.h" />
+    <ClInclude Include="Runtime\UnitComposer.h" />
+    <ClInclude Include="Runtime\UnitConverter.h" />
+    <ClInclude Include="Runtime\UnitHasInvalidDimension.h" />
+    <ClInclude Include="Runtime\UnitManager.h" />
+    <ClInclude Include="Runtime\UnitParser.h" />
+    <ClInclude Include="Runtime\UnitSystem.h" />
+    <ClInclude Include="Runtime\UnitSystemGenerator.h" />
+    <ClInclude Include="SecondMomentOfArea.h" />
+    <ClInclude Include="SectionModulus.h" />
+    <ClInclude Include="SpecificHeat.h" />
+    <ClInclude Include="StreamSupport.h" />
+    <ClInclude Include="Stream\ShowUnitString.h" />
+    <ClInclude Include="Stream\StreamOverloads.h" />
+    <ClInclude Include="Stream\StreamPointerManager.h" />
+    <ClInclude Include="Stream\StreamUnitSystem.h" />
+    <ClInclude Include="Stream\UseUnitSystemFormatter.h" />
+    <ClInclude Include="Stress.h" />
+    <ClInclude Include="TempDiff.h" />
+    <ClInclude Include="TempGradient.h" />
+    <ClInclude Include="TestingHelper.h" />
+    <ClInclude Include="ThermalExpansionCoeff.h" />
+    <ClInclude Include="Time.h" />
+    <ClInclude Include="TorsionalStiffness.h" />
+    <ClInclude Include="TranslationalDamping.h" />
+    <ClInclude Include="TranslationalFlexibility.h" />
+    <ClInclude Include="TranslationalQuadraticDamping.h" />
+    <ClInclude Include="TranslationalStiffness.h" />
+    <ClInclude Include="TranslationalStiffnessPerUnitLength.h" />
+    <ClInclude Include="Velocity.h" />
+    <ClInclude Include="VelocityResponseSpectrum.h" />
+    <ClInclude Include="Volume.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{576E1154-53D9-4E08-BDCB-10BAD6463485}</ProjectGuid>
+    <RootNamespace>Reflection</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>REFLECTION_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4273;4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>TypeUtilities.lib;Services.lib;Formatting.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>REFLECTION_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4273;4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>TypeUtilities.lib;Services.lib;Formatting.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="ArgumentException.h" />
+    <ClInclude Include="Attributes\ActionAttribute.h" />
+    <ClInclude Include="Attributes\AliasAttribute.h" />
+    <ClInclude Include="Attributes\AllowCreateAndModifyAttribute.h" />
+    <ClInclude Include="Attributes\AllowNullAttribute.h" />
+    <ClInclude Include="Attributes\AlternativeNullPointerNameAttribute.h" />
+    <ClInclude Include="Attributes\ArgumentTypeVisitor.h" />
+    <ClInclude Include="Attributes\ArgumentTypeVisitorOffset.h" />
+    <ClInclude Include="Attributes\AttributeCollection.h" />
+    <ClInclude Include="Attributes\AttributeCollectionService.h" />
+    <ClInclude Include="Attributes\AttributeWrapper.h" />
+    <ClInclude Include="Attributes\BindingAttribute.h" />
+    <ClInclude Include="Attributes\BindToParentAttribute.h" />
+    <ClInclude Include="Attributes\BindToSelectionAttribute.h" />
+    <ClInclude Include="Attributes\CaptionAttribute.h" />
+    <ClInclude Include="Attributes\ConditionalEvaluatorAttribute.h" />
+    <ClInclude Include="Attributes\ConstructorSelectorAttribute.h" />
+    <ClInclude Include="Attributes\ContainerAttribute.h" />
+    <ClInclude Include="Attributes\ContainerSerializationAttribute.h" />
+    <ClInclude Include="Attributes\ContextAttribute.h" />
+    <ClInclude Include="Attributes\CreateNewAttribute.h" />
+    <ClInclude Include="Attributes\DefaultAttribute.h" />
+    <ClInclude Include="Attributes\DefaultConstructorSelectorAttribute.h" />
+    <ClInclude Include="Attributes\DefaultMemberAttribute.h" />
+    <ClInclude Include="Attributes\DefaultNameAttribute.h" />
+    <ClInclude Include="Attributes\DefaultOptions.h" />
+    <ClInclude Include="Attributes\DefaultTypeAttribute.h" />
+    <ClInclude Include="Attributes\DeprecatedAttribute.h" />
+    <ClInclude Include="Attributes\DocumentationAttribute.h" />
+    <ClInclude Include="Attributes\EnabledAttribute.h" />
+    <ClInclude Include="Attributes\EnumerableAttribute.h" />
+    <ClInclude Include="Attributes\ExampleAttribute.h" />
+    <ClInclude Include="Attributes\ExpandMemberAttribute.h" />
+    <ClInclude Include="Attributes\ExpressionExpanderAttribute.h" />
+    <ClInclude Include="Attributes\FunctionCallbackAttribute.h" />
+    <ClInclude Include="Attributes\FunctionCallbackAttributeVararg.h" />
+    <ClInclude Include="Attributes\FunctionSelectorAttribute.h" />
+    <ClInclude Include="Attributes\FunctionWrapper.h" />
+    <ClInclude Include="Attributes\FunctionWrapperVararg.h" />
+    <ClInclude Include="Attributes\GenerateConstructorArgumentsAttribute.h" />
+    <ClInclude Include="Attributes\GroupAttribute.h" />
+    <ClInclude Include="Attributes\GroupEnablerAttribute.h" />
+    <ClInclude Include="Attributes\HeaderAttribute.h" />
+    <ClInclude Include="Attributes\IAttribute.h" />
+    <ClInclude Include="Attributes\IAttributeWrapper.h" />
+    <ClInclude Include="Attributes\IconAttribute.h" />
+    <ClInclude Include="Attributes\IgnoreInViewAttribute.h" />
+    <ClInclude Include="Attributes\ImageAttribute.h" />
+    <ClInclude Include="Attributes\IncludeInViewAttribute.h" />
+    <ClInclude Include="Attributes\InitializeCallbackAttribute.h" />
+    <ClInclude Include="Attributes\LayoutAttribute.h" />
+    <ClInclude Include="Attributes\LimitEnumerationAttribute.h" />
+    <ClInclude Include="Attributes\ListAsConstructorAttribute.h" />
+    <ClInclude Include="Attributes\MethodToStringAttribute.h" />
+    <ClInclude Include="Attributes\ModificationCallbackAttribute.h" />
+    <ClInclude Include="Attributes\ModifyExistingAttribute.h" />
+    <ClInclude Include="Attributes\NameAttribute.h" />
+    <ClInclude Include="Attributes\NotifyDeleteAttribute.h" />
+    <ClInclude Include="Attributes\ObjectNameAttribute.h" />
+    <ClInclude Include="Attributes\OkApplyCancelAttribute.h" />
+    <ClInclude Include="Attributes\OptionalAttribute.h" />
+    <ClInclude Include="Attributes\ParserAttribute.h" />
+    <ClInclude Include="Attributes\PostfixAttribute.h" />
+    <ClInclude Include="Attributes\RecordAttribute.h" />
+    <ClInclude Include="Attributes\SaveFileAttribute.h" />
+    <ClInclude Include="Attributes\ScriptExpressionAttribute.h" />
+    <ClInclude Include="Attributes\SerializationAttribute.h" />
+    <ClInclude Include="Attributes\ShortSyntaxAttribute.h" />
+    <ClInclude Include="Attributes\SingletonAttribute.h" />
+    <ClInclude Include="Attributes\SymmetryAttribute.h" />
+    <ClInclude Include="Attributes\TabAttribute.h" />
+    <ClInclude Include="Attributes\TerminateCallbackAttribute.h" />
+    <ClInclude Include="Attributes\TreatAsBoolAttribute.h" />
+    <ClInclude Include="Attributes\TupleAttribute.h" />
+    <ClInclude Include="Attributes\TypeAttribute.h" />
+    <ClInclude Include="Attributes\UndefinedAttribute.h" />
+    <ClInclude Include="Attributes\UtilityClassAttribute.h" />
+    <ClInclude Include="Attributes\ValidationAttribute.h" />
+    <ClInclude Include="Attributes\VisibleAttribute.h" />
+    <ClInclude Include="AutoReflect.h" />
+    <ClInclude Include="Classes\Class.h" />
+    <ClInclude Include="Classes\ClassArgumentPack.h" />
+    <ClInclude Include="Classes\ClassBase.h" />
+    <ClInclude Include="Classes\Public.h" />
+    <ClInclude Include="Config.h" />
+    <ClInclude Include="Constructors\Constructor.h" />
+    <ClInclude Include="Constructors\ConstructorConversion.h" />
+    <ClInclude Include="Constructors\ConstructorFunction.h" />
+    <ClInclude Include="Constructors\DefineConstructor.h" />
+    <ClInclude Include="Containers\GenericTupleReflect.h" />
+    <ClInclude Include="Containers\ReflectList.h" />
+    <ClInclude Include="Containers\ReflectMap.h" />
+    <ClInclude Include="Containers\ReflectPair.h" />
+    <ClInclude Include="Containers\ReflectSet.h" />
+    <ClInclude Include="Containers\ReflectTuple.h" />
+    <ClInclude Include="Containers\ReflectVector.h" />
+    <ClInclude Include="Contents\AssignmentContent.h" />
+    <ClInclude Include="Contents\CollectionContent.h" />
+    <ClInclude Include="Contents\Content.h" />
+    <ClInclude Include="Contents\ContentExpressionEvaluator.h" />
+    <ClInclude Include="Contents\ContentExpressionParser.h" />
+    <ClInclude Include="Contents\ContentObjectAtIndex.h" />
+    <ClInclude Include="Contents\IContent.h" />
+    <ClInclude Include="Contents\Impl\ContentUtility.h" />
+    <ClInclude Include="Contents\IReflectionContentsService.h" />
+    <ClInclude Include="Contents\MemberContent.h" />
+    <ClInclude Include="Contents\MemberSelectorContent.h" />
+    <ClInclude Include="Contents\ObjectContent.h" />
+    <ClInclude Include="Contents\ShortSyntax\ContentExpressionResult.h" />
+    <ClInclude Include="Contents\ShortSyntax\ContentShortSyntaxExpander.h" />
+    <ClInclude Include="Contents\TextContent.h" />
+    <ClInclude Include="Contents\TypeContent.h" />
+    <ClInclude Include="Contents\TypedLookupContent.h" />
+    <ClInclude Include="Contents\TypedTextContent.h" />
+    <ClInclude Include="Controls\Aspects\AliasAspect.h" />
+    <ClInclude Include="Controls\Aspects\CanAddAndRemoveRowsAspect.h" />
+    <ClInclude Include="Controls\Aspects\ConstructorAspect.h" />
+    <ClInclude Include="Controls\Aspects\ConstructorSelectorAspect.h" />
+    <ClInclude Include="Controls\Aspects\ContainerAspect.h" />
+    <ClInclude Include="Controls\Aspects\ContainerElementAspect.h" />
+    <ClInclude Include="Controls\Aspects\CustomAttributeCollectionAspect.h" />
+    <ClInclude Include="Controls\Aspects\DisabledAspect.h" />
+    <ClInclude Include="Controls\Aspects\DocumentationAspect.h" />
+    <ClInclude Include="Controls\Aspects\ExpandActionAspect.h" />
+    <ClInclude Include="Controls\Aspects\FileNameAspect.h" />
+    <ClInclude Include="Controls\Aspects\FunctionArgumentAspect.h" />
+    <ClInclude Include="Controls\Aspects\FunctionAspect.h" />
+    <ClInclude Include="Controls\Aspects\FunctionSelectorAspect.h" />
+    <ClInclude Include="Controls\Aspects\GroupAspect.h" />
+    <ClInclude Include="Controls\Aspects\GroupEnablerAspect.h" />
+    <ClInclude Include="Controls\Aspects\HeaderAspect.h" />
+    <ClInclude Include="Controls\Aspects\IControlAspect.h" />
+    <ClInclude Include="Controls\Aspects\IgnoreLayoutAspect.h" />
+    <ClInclude Include="Controls\Aspects\IndexedPropertyAspect.h" />
+    <ClInclude Include="Controls\Aspects\IsAliasAspect.h" />
+    <ClInclude Include="Controls\Aspects\IsFunctionalNodeAspect.h" />
+    <ClInclude Include="Controls\Aspects\LambdaPropertyAspect.h" />
+    <ClInclude Include="Controls\Aspects\PropertyAspect.h" />
+    <ClInclude Include="Controls\Aspects\RecordAccessorAspect.h" />
+    <ClInclude Include="Controls\Aspects\RootAspect.h" />
+    <ClInclude Include="Controls\Aspects\RowAspect.h" />
+    <ClInclude Include="Controls\Aspects\SelectedConstructorAspect.h" />
+    <ClInclude Include="Controls\Aspects\SymmetryAspect.h" />
+    <ClInclude Include="Controls\Aspects\TypeAspect.h" />
+    <ClInclude Include="Controls\ControlNode.h" />
+    <ClInclude Include="Controls\ControlNodeManager.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeAutoDetectConstructorHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeBindingAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeCaptionAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeConstructorHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeConstructorSelectorAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeContainerAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeContextAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeDeprecatedAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeExpandMemberAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeFunctionHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeFunctionSelectorAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeGroupAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeGroupEnablerAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeHandlerUtilities.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeHeaderAspectHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeIncludeInViewAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLambdaPropertyAspectHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLayoutAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLayoutControlElementHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLayoutDropdownButtonHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLayoutEmbeddedElementHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLayoutGroupBoxHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLayoutOverloadSelectorHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLayoutSelectorHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeLayoutSelectorLookupHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeModifyExistingAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeNameAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeNoConstructorsHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodePropertyHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeRecordAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeReplaceTypeWithContainerValueTypeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeRootHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeSaveFileAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeSymmetryAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeTupleAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeTypeHandler.h" />
+    <ClInclude Include="Controls\Handlers\ControlNodeUtilityClassAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\IControlNodeAttributeHandler.h" />
+    <ClInclude Include="Controls\Handlers\IControlNodeHandler.h" />
+    <ClInclude Include="DoReflect.h" />
+    <ClInclude Include="Enums\Enum.h" />
+    <ClInclude Include="Enums\EnumHelper.h" />
+    <ClInclude Include="Enums\EnumParser.h" />
+    <ClInclude Include="Enums\ReflectionEnumFormatter.h" />
+    <ClInclude Include="Functions\DefineFunction.h" />
+    <ClInclude Include="Functions\Function.h" />
+    <ClInclude Include="Functions\RegisterToStringFunction.h" />
+    <ClInclude Include="IExpressionEvaluator.h" />
+    <ClInclude Include="Layout\AutoControl.h" />
+    <ClInclude Include="Layout\Buttons.h" />
+    <ClInclude Include="Layout\Caption.h" />
+    <ClInclude Include="Layout\CheckBox.h" />
+    <ClInclude Include="Layout\ClonableLayoutPointer.h" />
+    <ClInclude Include="Layout\Collapsable.h" />
+    <ClInclude Include="Layout\CollectionOfElements.h" />
+    <ClInclude Include="Layout\ComboBox.h" />
+    <ClInclude Include="Layout\CompareVisitor.h" />
+    <ClInclude Include="Layout\ControlElement.h" />
+    <ClInclude Include="Layout\DropdownButton.h" />
+    <ClInclude Include="Layout\DynamicArea.h" />
+    <ClInclude Include="Layout\ElementWithOneChild.h" />
+    <ClInclude Include="Layout\EmbeddedElement.h" />
+    <ClInclude Include="Layout\EnableIf.h" />
+    <ClInclude Include="Layout\Grid.h" />
+    <ClInclude Include="Layout\GridElements.h" />
+    <ClInclude Include="Layout\GroupBox.h" />
+    <ClInclude Include="Layout\Handlers\CellLayoutManager.h" />
+    <ClInclude Include="Layout\Handlers\Contexts\ForwardingLayoutControlContext.h" />
+    <ClInclude Include="Layout\Handlers\Contexts\ILayoutControlContext.h" />
+    <ClInclude Include="Layout\Handlers\Contexts\LayoutControlContext.h" />
+    <ClInclude Include="Layout\Handlers\GroupCreators\CollectionOfElementsGroupCreator.h" />
+    <ClInclude Include="Layout\Handlers\GroupCreators\ILayoutElementGroupCreator.h" />
+    <ClInclude Include="Layout\Handlers\GroupCreators\RecordAttributeGroupCreator.h" />
+    <ClInclude Include="Layout\Handlers\GroupCreators\TabGroupCreator.h" />
+    <ClInclude Include="Layout\Handlers\ILayoutHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutBoolHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutControl.h" />
+    <ClInclude Include="Layout\Handlers\LayoutControlElementHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutDefaultChildHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutDefaultOverloadSelectorHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutEliminateAliasNodeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutEliminateReuseHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutEliminateStaticEmbeddedElementsHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutEliminateStaticPropertyHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutEmbeddedElementHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutEnumerableAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutEnumHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutFallbackHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutFunctionSelectorAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutGridElementsMergerHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutGridHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutGroupAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutGroupEnablerAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutGroupMergeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutHeaderAspectHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutIgnoreSymmetryCheckBoxHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutImageAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutLambdaPropertyAspectHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutLayoutAttributeForCellsHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutLayoutAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutManager.h" />
+    <ClInclude Include="Layout\Handlers\LayoutMarkAddedElementsHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutNameAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutNestedLayoutAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutOverloadSelectorHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutRecordAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutRemoveVerticalElementFromGroupBoxHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutSymmetryAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutTabAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutTreatAsBoolAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutUtilityClassAttributeHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutVerticalElementsGroupCreatorHandler.h" />
+    <ClInclude Include="Layout\Handlers\LayoutVerticalElementsMergeHandler.h" />
+    <ClInclude Include="Layout\Header\CallbackColumn.h" />
+    <ClInclude Include="Layout\Header\ColumnWithHeader.h" />
+    <ClInclude Include="Layout\Header\DefaultColumn.h" />
+    <ClInclude Include="Layout\Header\GenericColumn.h" />
+    <ClInclude Include="Layout\Header\Header.h" />
+    <ClInclude Include="Layout\Header\IColumn.h" />
+    <ClInclude Include="Layout\Header\PropertyColumn.h" />
+    <ClInclude Include="Layout\HorizontalElements.h" />
+    <ClInclude Include="Layout\ILayoutElement.h" />
+    <ClInclude Include="Layout\Image.h" />
+    <ClInclude Include="Layout\LayoutBuilder.h" />
+    <ClInclude Include="Layout\LayoutContext.h" />
+    <ClInclude Include="Layout\NamedItem.h" />
+    <ClInclude Include="Layout\OverloadSelector.h" />
+    <ClInclude Include="Layout\RadioButton.h" />
+    <ClInclude Include="Layout\RadioButtons.h" />
+    <ClInclude Include="Layout\Selector.h" />
+    <ClInclude Include="Layout\SelectorLookup.h" />
+    <ClInclude Include="Layout\Slider.h" />
+    <ClInclude Include="Layout\StringizeVisitor.h" />
+    <ClInclude Include="Layout\Symmetry.h" />
+    <ClInclude Include="Layout\TabControl.h" />
+    <ClInclude Include="Layout\Table.h" />
+    <ClInclude Include="Layout\TextBox.h" />
+    <ClInclude Include="Layout\Transformers\CombinedLayoutSourceProvider.h" />
+    <ClInclude Include="Layout\Transformers\ConstantLayoutSourceProvider.h" />
+    <ClInclude Include="Layout\Transformers\ConstructorFinderSourceProvider.h" />
+    <ClInclude Include="Layout\Transformers\FunctionLayoutSourceProvider.h" />
+    <ClInclude Include="Layout\Transformers\IElementAdder.h" />
+    <ClInclude Include="Layout\Transformers\ILayoutSource.h" />
+    <ClInclude Include="Layout\Transformers\ILayoutSourceProvider.h" />
+    <ClInclude Include="Layout\Transformers\LayoutSource.h" />
+    <ClInclude Include="Layout\Transformers\LayoutTransformer.h" />
+    <ClInclude Include="Layout\Transformers\MembersLayoutSourceProvider.h" />
+    <ClInclude Include="Layout\Transformers\NestedPropertyHandler.h" />
+    <ClInclude Include="Layout\Transformers\PropertyLayoutSource.h" />
+    <ClInclude Include="Layout\Transformers\PropertyLayoutTransformer.h" />
+    <ClInclude Include="Layout\Transformers\RecordIndexLayoutSource.h" />
+    <ClInclude Include="Layout\Transformers\TabControlElementAdder.h" />
+    <ClInclude Include="Layout\Transformers\TypeLayoutSource.h" />
+    <ClInclude Include="Layout\Transformers\VerticalElementAdder.h" />
+    <ClInclude Include="Layout\TypedLayoutElement.h" />
+    <ClInclude Include="Layout\VerticalElements.h" />
+    <ClInclude Include="Layout\Visitors\HasMemberVisitor.h" />
+    <ClInclude Include="Members\Arg.h" />
+    <ClInclude Include="Members\ArgumentForwarder\NoConvertArgumentList.h" />
+    <ClInclude Include="Members\ArgumentForwarder\NoConvertArgumentListSelector.h" />
+    <ClInclude Include="Members\ArgumentForwarder\NoConvertArgumentListVararg.h" />
+    <ClInclude Include="Members\ArgumentInfo.h" />
+    <ClInclude Include="Members\ArgumentList.h" />
+    <ClInclude Include="Members\ArgumentTypeVisitor.h" />
+    <ClInclude Include="Members\ArgumentTypeVisitorSelector.h" />
+    <ClInclude Include="Members\ArgumentTypeVisitorVararg.h" />
+    <ClInclude Include="Members\ArgWithDefault.h" />
+    <ClInclude Include="Members\CallableArguments.h" />
+    <ClInclude Include="Members\CallableArgumentsSelector.h" />
+    <ClInclude Include="Members\CallableArgumentsVararg.h" />
+    <ClInclude Include="Members\GlobalType.h" />
+    <ClInclude Include="Members\IMember.h" />
+    <ClInclude Include="Members\IMemberFwd.h" />
+    <ClInclude Include="Members\Invoker\ArgumentConverter.h" />
+    <ClInclude Include="Members\Invoker\FastInvoker.h" />
+    <ClInclude Include="Members\Invoker\Invoke.h" />
+    <ClInclude Include="Members\MemberCompare.h" />
+    <ClInclude Include="Members\MemberFormatter.h" />
+    <ClInclude Include="Members\MemberFunctionFromSignature.h" />
+    <ClInclude Include="Members\MemberLogger.h" />
+    <ClInclude Include="Members\MemberLoggerContext.h" />
+    <ClInclude Include="Members\MemberLoggerImpl.h" />
+    <ClInclude Include="Members\MemberType.h" />
+    <ClInclude Include="Members\MemberWithArguments.h" />
+    <ClInclude Include="Members\MemberWithArgumentsFwd.h" />
+    <ClInclude Include="Members\MemberWithPredefinedFirstArgument.h" />
+    <ClInclude Include="Members\Method.h" />
+    <ClInclude Include="Members\MethodWithSignature.h" />
+    <ClInclude Include="Members\Modifier.h" />
+    <ClInclude Include="Members\OperatorNames.h" />
+    <ClInclude Include="Members\OverloadedMember.h" />
+    <ClInclude Include="Objects\AsObjectCollection.h" />
+    <ClInclude Include="Objects\Delegate.h" />
+    <ClInclude Include="Objects\InvokeBinaryOperator.h" />
+    <ClInclude Include="Objects\InvokeUnaryOperator.h" />
+    <ClInclude Include="Objects\IScriptExpression.h" />
+    <ClInclude Include="Objects\IScriptingService.h" />
+    <ClInclude Include="Objects\LessObjectPointer.h" />
+    <ClInclude Include="Objects\Object.h" />
+    <ClInclude Include="Objects\TryInvoke.h" />
+    <ClInclude Include="Operators\BinaryOperator.h" />
+    <ClInclude Include="Operators\ConditionallyAddOperator.h" />
+    <ClInclude Include="Operators\DefineOperator.h" />
+    <ClInclude Include="Operators\This.h" />
+    <ClInclude Include="Operators\UnaryOperator.h" />
+    <ClInclude Include="Plugins\IReflectionSubsystem.h" />
+    <ClInclude Include="Properties\DefineProperties.h" />
+    <ClInclude Include="Properties\PropertyGet.h" />
+    <ClInclude Include="Properties\PropertySet.h" />
+    <ClInclude Include="Properties\PropertyStaticGet.h" />
+    <ClInclude Include="Reflect.h" />
+    <ClInclude Include="ReflectionCast.h" />
+    <ClInclude Include="ReflectionTraits.h" />
+    <ClInclude Include="Reflection\IAttribute_Reflection.h" />
+    <ClInclude Include="Reflection\IMember_Reflection.h" />
+    <ClInclude Include="TypeConversions\ArgumentConversionList.h" />
+    <ClInclude Include="TypeConversions\ArgumentConversionQuality.h" />
+    <ClInclude Include="TypeConversions\BuiltInConversions.h" />
+    <ClInclude Include="TypeConversions\ComplexConversionGraph.h" />
+    <ClInclude Include="TypeConversions\ConversionGraph.h" />
+    <ClInclude Include="TypeConversions\ConversionGraphWithComplexDynamicConversion.h" />
+    <ClInclude Include="TypeConversions\ConversionSequence.h" />
+    <ClInclude Include="TypeConversions\ConversionType.h" />
+    <ClInclude Include="TypeConversions\Details\GraphEdge.h" />
+    <ClInclude Include="TypeConversions\Details\GraphPath.h" />
+    <ClInclude Include="TypeConversions\Details\GraphVertex.h" />
+    <ClInclude Include="TypeConversions\DowncastConversion.h" />
+    <ClInclude Include="TypeConversions\DynamicTypeDeduction.h" />
+    <ClInclude Include="TypeConversions\ExtendConversion.h" />
+    <ClInclude Include="TypeConversions\FullConversionGraph.h" />
+    <ClInclude Include="TypeConversions\IAlternativeConverter.h" />
+    <ClInclude Include="TypeConversions\IConversion.h" />
+    <ClInclude Include="TypeConversions\IConversionGraph.h" />
+    <ClInclude Include="TypeConversions\IConversionSequence.h" />
+    <ClInclude Include="TypeConversions\ImplicitConversion.h" />
+    <ClInclude Include="TypeConversions\InheritanceConversions.h" />
+    <ClInclude Include="TypeConversions\LValueConversion.h" />
+    <ClInclude Include="TypeConversions\ManualConversionGraph.h" />
+    <ClInclude Include="TypeConversions\MinimalConversionSequence.h" />
+    <ClInclude Include="TypeConversions\PointerReferenceConversion.h" />
+    <ClInclude Include="TypeConversions\TrivialConversion.h" />
+    <ClInclude Include="TypeConversions\TypeConversionService.h" />
+    <ClInclude Include="TypeConversions\UniteConstruction.h" />
+    <ClInclude Include="TypeConversions\UpcastConversion.h" />
+    <ClInclude Include="TypeConversions\UserConversion.h" />
+    <ClInclude Include="TypeConversions\WrapConversion.h" />
+    <ClInclude Include="TypeLibraries\ExtendedTypeTraits.h" />
+    <ClInclude Include="TypeLibraries\IType.h" />
+    <ClInclude Include="TypeLibraries\ITypeLibrary.h" />
+    <ClInclude Include="TypeLibraries\Type.h" />
+    <ClInclude Include="TypeLibraries\TypeLibrary.h" />
+    <ClInclude Include="TypeLibraries\TypeLibraryFactory.h" />
+    <ClInclude Include="TypeLibraries\TypeLibraryNamedTypeFormatter.h" />
+    <ClInclude Include="TypeLibraries\TypeLibraryPointer.h" />
+    <ClInclude Include="TypeLibraries\TypeNotCaseSensitive.h" />
+    <ClInclude Include="TypeLibraries\TypeWithBases.h" />
+    <ClInclude Include="TypeLibraries\TypeWithForwarding.h" />
+    <ClInclude Include="TypeLibraries\TypeWithGlobalMemberRegistration.h" />
+    <ClInclude Include="Types\DecoratedTypeDeducer.h" />
+    <ClInclude Include="Types\DecoratedTypeFormatter.h" />
+    <ClInclude Include="Types\DecoratedTypeInfo.h" />
+    <ClInclude Include="Types\DeduceTypeTag.h" />
+    <ClInclude Include="Types\DefaultTypeFormatter.h" />
+    <ClInclude Include="Types\DynamicTypeTraits.h" />
+    <ClInclude Include="Types\ITypeFormatter.h" />
+    <ClInclude Include="Types\TypeDecoration.h" />
+    <ClInclude Include="Types\TypeFormatter.h" />
+    <ClInclude Include="Types\TypeTraits.h" />
+    <ClInclude Include="Utilities\ArgumentFromObjectExtracter.h" />
+    <ClInclude Include="Utilities\AutoGenerateStringFromConstructors.h" />
+    <ClInclude Include="Utilities\CallableConstructor.h" />
+    <ClInclude Include="Utilities\ConstructibleItem.h" />
+    <ClInclude Include="Utilities\ConstructorFinder.h" />
+    <ClInclude Include="Utilities\ConstructorFromTypeSubset.h" />
+    <ClInclude Include="Utilities\ConstructorSelector.h" />
+    <ClInclude Include="Utilities\ConstructorsFromTypeExtracter.h" />
+    <ClInclude Include="Utilities\ConstructorsFromTypeService.h" />
+    <ClInclude Include="Utilities\DefaultArgumentExtracter.h" />
+    <ClInclude Include="Utilities\DefaultRegistration.h" />
+    <ClInclude Include="Utilities\FunctionFinder.h" />
+    <ClInclude Include="Utilities\IMemberFinder.h" />
+    <ClInclude Include="Utilities\MemberFinder.h" />
+    <ClInclude Include="Utilities\MemberItem.h" />
+    <ClInclude Include="Utilities\MemberUtilities.h" />
+    <ClInclude Include="Utilities\ReflectOptional.h" />
+    <ClInclude Include="Utilities\SerializationNameExtracter.h" />
+    <ClInclude Include="Utilities\SetGetWithUnits.h" />
+    <ClInclude Include="Variants\ConversionError.h" />
+    <ClInclude Include="Variants\InternalVariantService.h" />
+    <ClInclude Include="Variants\IVariantFormatter.h" />
+    <ClInclude Include="Variants\SmartPointers\AliasingSmartPointerStorage.h" />
+    <ClInclude Include="Variants\SmartPointers\CopyableSmartPointerStorage.h" />
+    <ClInclude Include="Variants\SmartPointers\MovableSmartPointerStorage.h" />
+    <ClInclude Include="Variants\SmartPointers\SmartPointerHelper.h" />
+    <ClInclude Include="Variants\StackStorage.h" />
+    <ClInclude Include="Variants\StorageBase.h" />
+    <ClInclude Include="Variants\Variant.h" />
+    <ClInclude Include="Variants\VariantService.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Attributes\AttributeCollection.cpp" />
+    <ClCompile Include="Attributes\CaptionAttribute.cpp" />
+    <ClCompile Include="Attributes\ExpressionExpanderAttribute.cpp" />
+    <ClCompile Include="Attributes\IconAttribute.cpp" />
+    <ClCompile Include="Attributes\RecordAttribute.cpp" />
+    <ClCompile Include="Attributes\SerializationAttribute.cpp" />
+    <ClCompile Include="Attributes\UndefinedAttribute.cpp" />
+    <ClCompile Include="Contents\AssignmentContent.cpp" />
+    <ClCompile Include="Contents\CollectionContent.cpp" />
+    <ClCompile Include="Contents\Content.cpp" />
+    <ClCompile Include="Contents\ContentExpressionEvaluator.cpp" />
+    <ClCompile Include="Contents\ContentExpressionParser.cpp" />
+    <ClCompile Include="Contents\ContentObjectAtIndex.cpp" />
+    <ClCompile Include="Contents\IContent.cpp" />
+    <ClCompile Include="Contents\Impl\ContentUtility.cpp" />
+    <ClCompile Include="Contents\MemberContent.cpp" />
+    <ClCompile Include="Contents\MemberSelectorContent.cpp" />
+    <ClCompile Include="Contents\ObjectContent.cpp" />
+    <ClCompile Include="Contents\ShortSyntax\ContentExpressionResult.cpp" />
+    <ClCompile Include="Contents\ShortSyntax\ContentShortSyntaxExpander.cpp" />
+    <ClCompile Include="Contents\TextContent.cpp" />
+    <ClCompile Include="Contents\TypeContent.cpp" />
+    <ClCompile Include="Contents\TypedLookupContent.cpp" />
+    <ClCompile Include="Contents\TypedTextContent.cpp" />
+    <ClCompile Include="Controls\Aspects\AliasAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\CanAddAndRemoveRowsAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\ConstructorAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\ConstructorSelectorAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\ContainerAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\ContainerElementAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\CustomAttributeCollectionAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\DisabledAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\DocumentationAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\ExpandActionAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\FileNameAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\FunctionArgumentAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\FunctionAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\FunctionSelectorAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\GroupAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\GroupEnablerAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\HeaderAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\IgnoreLayoutAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\IndexedPropertyAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\IsAliasAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\IsFunctionalNodeAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\LambdaPropertyAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\PropertyAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\RecordAccessorAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\RootAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\RowAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\SelectedConstructorAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\SymmetryAspect.cpp" />
+    <ClCompile Include="Controls\Aspects\TypeAspect.cpp" />
+    <ClCompile Include="Controls\ControlNode.cpp" />
+    <ClCompile Include="Controls\ControlNodeManager.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeAutoDetectConstructorHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeBindingAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeCaptionAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeConstructorHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeConstructorSelectorAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeContainerAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeContextAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeDeprecatedAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeExpandMemberAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeFunctionHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeFunctionSelectorAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeGroupAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeGroupEnablerAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeHandlerUtilities.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeHeaderAspectHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeIncludeInViewAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeLambdaPropertyAspectHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeLayoutControlElementHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeLayoutDropdownButtonHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeLayoutEmbeddedElementHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeLayoutGroupBoxHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeLayoutOverloadSelectorHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeLayoutSelectorHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeLayoutSelectorLookupHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeModifyExistingAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeNameAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeNoConstructorsHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodePropertyHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeRecordAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeReplaceTypeWithContainerValueTypeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeRootHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeSaveFileAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeSymmetryAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeTupleAttributeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeTypeHandler.cpp" />
+    <ClCompile Include="Controls\Handlers\ControlNodeUtilityClassAttributeHandler.cpp" />
+    <ClCompile Include="Enums\EnumHelper.cpp" />
+    <ClCompile Include="Enums\EnumParser.cpp" />
+    <ClCompile Include="Enums\ReflectionEnumFormatter.cpp" />
+    <ClCompile Include="IExpressionEvaluator.cpp" />
+    <ClCompile Include="Layout\CompareVisitor.cpp" />
+    <ClCompile Include="Layout\Handlers\CellLayoutManager.cpp" />
+    <ClCompile Include="Layout\Handlers\Contexts\ForwardingLayoutControlContext.cpp" />
+    <ClCompile Include="Layout\Handlers\Contexts\LayoutControlContext.cpp" />
+    <ClCompile Include="Layout\Handlers\GroupCreators\CollectionOfElementsGroupCreator.cpp" />
+    <ClCompile Include="Layout\Handlers\GroupCreators\RecordAttributeGroupCreator.cpp" />
+    <ClCompile Include="Layout\Handlers\GroupCreators\TabGroupCreator.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutBoolHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutControl.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutControlElementHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutDefaultChildHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutDefaultOverloadSelectorHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutEliminateAliasNodeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutEliminateReuseHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutEliminateStaticEmbeddedElementsHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutEliminateStaticPropertyHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutEmbeddedElementHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutEnumerableAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutEnumHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutFallbackHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutFunctionSelectorAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutGridElementsMergerHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutGridHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutGroupAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutGroupEnablerAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutGroupMergeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutHeaderAspectHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutIgnoreSymmetryCheckBoxHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutImageAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutLambdaPropertyAspectHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutLayoutAttributeForCellsHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutLayoutAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutManager.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutMarkAddedElementsHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutNameAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutNestedLayoutAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutOverloadSelectorHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutRecordAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutRemoveVerticalElementFromGroupBoxHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutSymmetryAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutTabAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutTreatAsBoolAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutUtilityClassAttributeHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutVerticalElementsGroupCreatorHandler.cpp" />
+    <ClCompile Include="Layout\Handlers\LayoutVerticalElementsMergeHandler.cpp" />
+    <ClCompile Include="Layout\Header\ColumnWithHeader.cpp" />
+    <ClCompile Include="Layout\Header\DefaultColumn.cpp" />
+    <ClCompile Include="Layout\Header\Header.cpp" />
+    <ClCompile Include="Layout\Header\PropertyColumn.cpp" />
+    <ClCompile Include="Layout\ILayoutElement.cpp" />
+    <ClCompile Include="Layout\LayoutBuilder.cpp" />
+    <ClCompile Include="Layout\StringizeVisitor.cpp" />
+    <ClCompile Include="Layout\Transformers\CombinedLayoutSourceProvider.cpp" />
+    <ClCompile Include="Layout\Transformers\ConstantLayoutSourceProvider.cpp" />
+    <ClCompile Include="Layout\Transformers\ConstructorFinderSourceProvider.cpp" />
+    <ClCompile Include="Layout\Transformers\FunctionLayoutSourceProvider.cpp" />
+    <ClCompile Include="Layout\Transformers\LayoutSource.cpp" />
+    <ClCompile Include="Layout\Transformers\LayoutTransformer.cpp" />
+    <ClCompile Include="Layout\Transformers\MembersLayoutSourceProvider.cpp" />
+    <ClCompile Include="Layout\Transformers\NestedPropertyHandler.cpp" />
+    <ClCompile Include="Layout\Transformers\PropertyLayoutSource.cpp" />
+    <ClCompile Include="Layout\Transformers\PropertyLayoutTransformer.cpp" />
+    <ClCompile Include="Layout\Transformers\RecordIndexLayoutSource.cpp" />
+    <ClCompile Include="Layout\Transformers\TabControlElementAdder.cpp" />
+    <ClCompile Include="Layout\Transformers\TypeLayoutSource.cpp" />
+    <ClCompile Include="Layout\Transformers\VerticalElementAdder.cpp" />
+    <ClCompile Include="Layout\Visitors\HasMemberVisitor.cpp" />
+    <ClCompile Include="Members\ArgumentInfo.cpp" />
+    <ClCompile Include="Members\MemberFormatter.cpp" />
+    <ClCompile Include="Members\MemberLogger.cpp" />
+    <ClCompile Include="Members\MemberLoggerContext.cpp" />
+    <ClCompile Include="Members\MemberLoggerImpl.cpp" />
+    <ClCompile Include="Members\MemberWithArguments.cpp" />
+    <ClCompile Include="Members\MemberWithPredefinedFirstArgument.cpp" />
+    <ClCompile Include="Members\Method.cpp" />
+    <ClCompile Include="Members\OverloadedMember.cpp" />
+    <ClCompile Include="Objects\Delegate.cpp" />
+    <ClCompile Include="Objects\Object.cpp" />
+    <ClCompile Include="Reflection\IAttribute_Reflection.cpp" />
+    <ClCompile Include="Reflection\IMember_Reflection.cpp" />
+    <ClCompile Include="TypeConversions\ArgumentConversionList.cpp" />
+    <ClCompile Include="TypeConversions\ArgumentConversionQuality.cpp" />
+    <ClCompile Include="TypeConversions\BuiltInConversions.cpp" />
+    <ClCompile Include="TypeConversions\ComplexConversionGraph.cpp" />
+    <ClCompile Include="TypeConversions\ConversionGraph.cpp" />
+    <ClCompile Include="TypeConversions\ConversionGraphWithComplexDynamicConversion.cpp" />
+    <ClCompile Include="TypeConversions\ConversionSequence.cpp" />
+    <ClCompile Include="TypeConversions\Details\GraphEdge.cpp" />
+    <ClCompile Include="TypeConversions\Details\GraphPath.cpp" />
+    <ClCompile Include="TypeConversions\Details\GraphVertex.cpp" />
+    <ClCompile Include="TypeConversions\FullConversionGraph.cpp" />
+    <ClCompile Include="TypeConversions\ManualConversionGraph.cpp" />
+    <ClCompile Include="TypeConversions\MinimalConversionSequence.cpp" />
+    <ClCompile Include="TypeLibraries\ExtendedTypeTraits.cpp" />
+    <ClCompile Include="TypeLibraries\Type.cpp" />
+    <ClCompile Include="TypeLibraries\TypeLibrary.cpp" />
+    <ClCompile Include="TypeLibraries\TypeLibraryNamedTypeFormatter.cpp" />
+    <ClCompile Include="TypeLibraries\TypeNotCaseSensitive.cpp" />
+    <ClCompile Include="TypeLibraries\TypeWithBases.cpp" />
+    <ClCompile Include="TypeLibraries\TypeWithForwarding.cpp" />
+    <ClCompile Include="TypeLibraries\TypeWithGlobalMemberRegistration.cpp" />
+    <ClCompile Include="Types\DynamicTypeTraits.cpp" />
+    <ClCompile Include="Types\TypeFormatter.cpp" />
+    <ClCompile Include="Utilities\ArgumentFromObjectExtracter.cpp" />
+    <ClCompile Include="Utilities\AutoGenerateStringFromConstructors.cpp" />
+    <ClCompile Include="Utilities\CallableConstructor.cpp" />
+    <ClCompile Include="Utilities\ConstructibleItem.cpp" />
+    <ClCompile Include="Utilities\ConstructorSelector.cpp" />
+    <ClCompile Include="Utilities\ConstructorsFromTypeExtracter.cpp" />
+    <ClCompile Include="Utilities\ConstructorsFromTypeService.cpp" />
+    <ClCompile Include="Utilities\DefaultArgumentExtracter.cpp" />
+    <ClCompile Include="Utilities\DefaultRegistration.cpp" />
+    <ClCompile Include="Utilities\MemberItem.cpp" />
+    <ClCompile Include="Utilities\SerializationNameExtracter.cpp" />
+    <ClCompile Include="Variants\Variant.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\boost.1.77.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.77.0.0\build\boost.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost.1.77.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.77.0.0\build\boost.targets'))" />
+  </Target>
+</Project>
