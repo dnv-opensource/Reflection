@@ -1,15 +1,26 @@
 # Prerequisites
 *.d
 
+.vs/
+x64/
+packages/
+*.dir/
+
+# Project files
+*.vcxproj.filters
+*.vcxproj.user
+
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
+*.suo
 
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
 
 # Compiled Dynamic libraries
 *.so
