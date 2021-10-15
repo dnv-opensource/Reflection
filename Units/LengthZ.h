@@ -13,6 +13,7 @@ namespace DNVS {namespace MoFa {namespace Units {
         LengthZ(const LengthZ& other) = default;
         LengthZ(const Length& other) : Length(other) {}
         LengthZ(const Quantity<LengthDimension>& other) : Length(other) {}
+        LengthZ(const QuantityBase<LengthDimension>& other) : Length(other) {}
         LengthZ(const NamedQuantity<LengthDimension>& other) : Length(other) {}
         explicit LengthZ(double value) : Length(value) {}
         LengthZ() {}

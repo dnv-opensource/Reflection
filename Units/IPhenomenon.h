@@ -71,6 +71,7 @@ namespace DNVS {namespace MoFa {namespace Units {
         typedef typename PhenomenonT PhenomenonType;
 
         Quantity(const Quantity& other) : BaseClass(other) {}        
+        Quantity(const QuantityBase<DimensionType>& other) : BaseClass(other) {}
         Quantity(const Quantity<DimensionType>& other) : BaseClass(other) {}
         Quantity(const NamedQuantity<DimensionType>& other) : BaseClass(other) {}
         explicit Quantity(double value) : BaseClass(value) {}

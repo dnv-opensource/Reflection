@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{178B0EA5-1B55-4626-8B18-A124A8B719EF}</ProjectGuid>
+    <RootNamespace>UnitsReflection</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UNITS_REFLECTION_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;.</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Formatting.lib;Reflection.lib;Units.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>UNITS_REFLECTION_EXPORTS;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..;.</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Formatting.lib;Reflection.lib;Units.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Units\Reflection\Details\ReflectAcceleration.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectAngle.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectArea.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectAxialStiffness.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectBendingStiffness.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectCoupledDamping.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectCoupledMass.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectCoupledQuadraticDamping.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectCoupledQuadraticDampingForce.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectCoupledQuadraticDampingMoment.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectCoupledStiffness.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectCurvature.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectCurvatureResponseSpectrum.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectDampingPerUnitLength.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectDisplacementResponseSpectrum.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectEnergy.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectEnergyDensity.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectFirstMomentOfArea.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectForce.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectForceEnergyDensity.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectForcePerUnitArea.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectForcePerUnitAreaPerAngle.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectForcePerUnitLength.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectForcePerUnitVolume.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectForceResponseSpectrum.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectFrequency.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectKinematicViscosity.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectLength.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectMass.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectMassDensity.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectMassMomentOfInertia.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectMassPerUnitArea.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectMassPerUnitLength.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectMomentOfForce.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectMomentOfForceEnergyDensity.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectMomentResponseSpectrum.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectPressure.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectQuadraticDampingPerUnitLength.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationalAcceleration.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationalDamping.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationalFlexibility.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationalQuadraticDamping.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationalResponseSpectrum.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationalStiffness.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationalStiffnessPerUnitLength.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationalVelocity.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectRotationPerLength.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectSecondMomentOfArea.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectSectionModulus.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectSpecificHeat.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectStress.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTempDiff.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTempGradient.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectThermalExpansionCoeff.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTime.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTorsionalStiffness.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTranslationalDamping.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTranslationalFlexibility.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTranslationalQuadraticDamping.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTranslationalStiffness.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectTranslationalStiffnessPerUnitLength.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectVelocity.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectVelocityResponseSpectrum.cpp" />
+    <ClCompile Include="Units\Reflection\Details\ReflectVolume.cpp" />
+    <ClCompile Include="Units\Reflection\ReflectCommon.cpp" />
+    <ClCompile Include="Units\Reflection\ReflectQuantities.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Units\Reflection\Config.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectAcceleration.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectAngle.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectArea.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectAxialStiffness.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectBendingStiffness.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectCoupledDamping.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectCoupledMass.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectCoupledQuadraticDamping.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectCoupledQuadraticDampingForce.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectCoupledQuadraticDampingMoment.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectCoupledStiffness.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectCurvature.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectCurvatureResponseSpectrum.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectDampingPerUnitLength.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectDisplacementResponseSpectrum.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectEnergy.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectEnergyDensity.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectFirstMomentOfArea.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectForce.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectForceEnergyDensity.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectForcePerUnitArea.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectForcePerUnitAreaPerAngle.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectForcePerUnitLength.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectForcePerUnitVolume.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectForceResponseSpectrum.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectFrequency.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectKinematicViscosity.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectLength.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectMass.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectMassDensity.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectMassMomentOfInertia.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectMassPerUnitArea.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectMassPerUnitLength.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectMomentOfForce.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectMomentOfForceEnergyDensity.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectMomentResponseSpectrum.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectPressure.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectQuadraticDampingPerUnitLength.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationalAcceleration.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationalDamping.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationalFlexibility.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationalQuadraticDamping.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationalResponseSpectrum.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationalStiffness.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationalStiffnessPerUnitLength.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationalVelocity.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectRotationPerLength.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectSecondMomentOfArea.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectSectionModulus.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectSpecificHeat.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectStress.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTempDiff.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTempGradient.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectThermalExpansionCoeff.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTime.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTorsionalStiffness.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTranslationalDamping.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTranslationalFlexibility.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTranslationalQuadraticDamping.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTranslationalStiffness.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectTranslationalStiffnessPerUnitLength.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectVelocity.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectVelocityResponseSpectrum.h" />
+    <ClInclude Include="Units\Reflection\Details\ReflectVolume.h" />
+    <ClInclude Include="Units\Reflection\ReflectCommon.h" />
+    <ClInclude Include="Units\Reflection\ReflectOperators.h" />
+    <ClInclude Include="Units\Reflection\ReflectPhenomenon.h" />
+    <ClInclude Include="Units\Reflection\ReflectQuantities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\boost.1.77.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.77.0.0\build\boost.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost.1.77.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.77.0.0\build\boost.targets'))" />
+  </Target>
+</Project>

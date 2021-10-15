@@ -31,6 +31,7 @@ namespace DNVS {namespace MoFa {namespace Units {
     {
     public:
         Quantity(const Quantity& other) : BaseClass(other) {}
+        Quantity(const QuantityBase<EnergyDimension>& other) : BaseClass(other) {}
         Quantity(const NamedEnergy& other) : BaseClass(other) {}
         explicit Quantity(double value) : BaseClass(value) {}
         Quantity() {}  

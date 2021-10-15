@@ -34,6 +34,7 @@ namespace DNVS {namespace MoFa {namespace Units {
     {
     public:
         Quantity(const Quantity& other) : BaseClass(other) {}
+        Quantity(const QuantityBase<AngleDimension>& other) : BaseClass(other) {}
         Quantity(const NamedAngle& other) : BaseClass(other) {}
         explicit Quantity(double value) : BaseClass(value) {}
         Quantity(){}

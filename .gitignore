@@ -5,6 +5,7 @@
 x64/
 packages/
 *.dir/
+*.dat
 
 # Project files
 *.vcxproj.filters

@@ -9,6 +9,7 @@
 #include "Units/Stream/UseUnitSystemFormatter.h"
 #include "Units/Runtime/Unit.h"
 #include "Units/Runtime/UnitSystem.h"
+#include "Quantity.h"
 
 namespace DNVS {namespace MoFa {namespace Units {
 

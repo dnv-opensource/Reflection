@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{1DBAA15E-E47E-4194-B098-12AFA80EDFD0}</ProjectGuid>
+    <RootNamespace>jsUnits</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <PreprocessorDefinitions>JSUNITS_IMPLEMENTATION;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Reflection.lib;Units.lib;jsScript.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <PreprocessorDefinitions>JSUNITS_IMPLEMENTATION;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Reflection.lib;Units.lib;jsScript.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="jsAcceleration.cpp" />
+    <ClCompile Include="jsAllUnits.cpp" />
+    <ClCompile Include="jsAngle.cpp" />
+    <ClCompile Include="jsArea.cpp" />
+    <ClCompile Include="jsAxialStiffness.cpp" />
+    <ClCompile Include="jsBendingStiffness.cpp" />
+    <ClCompile Include="jsConvertInvalidUnit.cpp" />
+    <ClCompile Include="jsCoupledDamping.cpp" />
+    <ClCompile Include="jsCoupledMass.cpp" />
+    <ClCompile Include="jsCoupledQuadraticDamping.cpp" />
+    <ClCompile Include="jsCoupledQuadraticDampingForce.cpp" />
+    <ClCompile Include="jsCoupledQuadraticDampingMoment.cpp" />
+    <ClCompile Include="jsCoupledStiffness.cpp" />
+    <ClCompile Include="jsCurvature.cpp" />
+    <ClCompile Include="jsCurvatureResponseSpectrum.cpp" />
+    <ClCompile Include="jsDampingPerUnitLength.cpp" />
+    <ClCompile Include="jsDisplacementResponseSpectrum.cpp" />
+    <ClCompile Include="jsEnergy.cpp" />
+    <ClCompile Include="jsEnergyDensity.cpp" />
+    <ClCompile Include="jsFirstMomentOfArea.cpp" />
+    <ClCompile Include="jsForce.cpp" />
+    <ClCompile Include="jsForceEnergyDensity.cpp" />
+    <ClCompile Include="jsForcePerUnitArea.cpp" />
+    <ClCompile Include="jsForcePerUnitAreaPerAngle.cpp" />
+    <ClCompile Include="jsForcePerUnitLength.cpp" />
+    <ClCompile Include="jsForcePerUnitVolume.cpp" />
+    <ClCompile Include="jsForceResponseSpectrum.cpp" />
+    <ClCompile Include="jsFrequency.cpp" />
+    <ClCompile Include="jsKinematicViscosity.cpp" />
+    <ClCompile Include="jsLength.cpp" />
+    <ClCompile Include="jsMass.cpp" />
+    <ClCompile Include="jsMassDensity.cpp" />
+    <ClCompile Include="jsMassMomentOfInertia.cpp" />
+    <ClCompile Include="jsMassPerUnitArea.cpp" />
+    <ClCompile Include="jsMassPerUnitLength.cpp" />
+    <ClCompile Include="jsMomentOfForce.cpp" />
+    <ClCompile Include="jsMomentOfForceEnergyDensity.cpp" />
+    <ClCompile Include="jsMomentResponseSpectrum.cpp" />
+    <ClCompile Include="jsParameter.cpp" />
+    <ClCompile Include="jsPressure.cpp" />
+    <ClCompile Include="jsQuadraticDampingPerUnitLength.cpp" />
+    <ClCompile Include="jsRotationalAcceleration.cpp" />
+    <ClCompile Include="jsRotationalDamping.cpp" />
+    <ClCompile Include="jsRotationalFlexibility.cpp" />
+    <ClCompile Include="jsRotationalQuadraticDamping.cpp" />
+    <ClCompile Include="jsRotationalResponseSpectrum.cpp" />
+    <ClCompile Include="jsRotationalStiffness.cpp" />
+    <ClCompile Include="jsRotationalStiffnessPerUnitLength.cpp" />
+    <ClCompile Include="jsRotationalVelocity.cpp" />
+    <ClCompile Include="jsRotationPerLength.cpp" />
+    <ClCompile Include="jsSecondMomentOfArea.cpp" />
+    <ClCompile Include="jsSectionModulus.cpp" />
+    <ClCompile Include="jsSpecificHeat.cpp" />
+    <ClCompile Include="jsStress.cpp" />
+    <ClCompile Include="jsTemperatureDifference.cpp" />
+    <ClCompile Include="jsTemperatureGradient.cpp" />
+    <ClCompile Include="jsThermalExpansionCoeff.cpp" />
+    <ClCompile Include="jsTime.cpp" />
+    <ClCompile Include="jsTorsionalStiffness.cpp" />
+    <ClCompile Include="jsTranslationalDamping.cpp" />
+    <ClCompile Include="jsTranslationalFlexibility.cpp" />
+    <ClCompile Include="jsTranslationalQuadraticDamping.cpp" />
+    <ClCompile Include="jsTranslationalStiffness.cpp" />
+    <ClCompile Include="jsTranslationalStiffnessPerUnitLength.cpp" />
+    <ClCompile Include="jsUnits.cpp" />
+    <ClCompile Include="jsVelocity.cpp" />
+    <ClCompile Include="jsVelocityResponseSpectrum.cpp" />
+    <ClCompile Include="jsVolume.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="jsAcceleration.h" />
+    <ClInclude Include="jsAllUnits.h" />
+    <ClInclude Include="jsAngle.h" />
+    <ClInclude Include="jsArea.h" />
+    <ClInclude Include="jsAxialStiffness.h" />
+    <ClInclude Include="jsBendingStiffness.h" />
+    <ClInclude Include="jsConvertInvalidUnit.h" />
+    <ClInclude Include="jsCoupledDamping.h" />
+    <ClInclude Include="jsCoupledMass.h" />
+    <ClInclude Include="jsCoupledQuadraticDamping.h" />
+    <ClInclude Include="jsCoupledQuadraticDampingForce.h" />
+    <ClInclude Include="jsCoupledQuadraticDampingMoment.h" />
+    <ClInclude Include="jsCoupledStiffness.h" />
+    <ClInclude Include="jsCurvature.h" />
+    <ClInclude Include="jsCurvatureResponseSpectrum.h" />
+    <ClInclude Include="jsDampingPerUnitLength.h" />
+    <ClInclude Include="jsDisplacementResponseSpectrum.h" />
+    <ClInclude Include="jsEnergy.h" />
+    <ClInclude Include="jsEnergyDensity.h" />
+    <ClInclude Include="jsFirstMomentOfArea.h" />
+    <ClInclude Include="jsForce.h" />
+    <ClInclude Include="jsForceEnergyDensity.h" />
+    <ClInclude Include="jsForcePerUnitArea.h" />
+    <ClInclude Include="jsForcePerUnitAreaPerAngle.h" />
+    <ClInclude Include="jsForcePerUnitLength.h" />
+    <ClInclude Include="jsForcePerUnitVolume.h" />
+    <ClInclude Include="jsForceResponseSpectrum.h" />
+    <ClInclude Include="jsFrequency.h" />
+    <ClInclude Include="jsKinematicViscosity.h" />
+    <ClInclude Include="jsLength.h" />
+    <ClInclude Include="jsMass.h" />
+    <ClInclude Include="jsMassDensity.h" />
+    <ClInclude Include="jsMassMomentOfInertia.h" />
+    <ClInclude Include="jsMassPerUnitArea.h" />
+    <ClInclude Include="jsMassPerUnitLength.h" />
+    <ClInclude Include="jsMomentOfForce.h" />
+    <ClInclude Include="jsMomentOfForceEnergyDensity.h" />
+    <ClInclude Include="jsMomentResponseSpectrum.h" />
+    <ClInclude Include="jsParameter.h" />
+    <ClInclude Include="jsPressure.h" />
+    <ClInclude Include="jsQuadraticDampingPerUnitLength.h" />
+    <ClInclude Include="jsRotationalAcceleration.h" />
+    <ClInclude Include="jsRotationalDamping.h" />
+    <ClInclude Include="jsRotationalFlexibility.h" />
+    <ClInclude Include="jsRotationalQuadraticDamping.h" />
+    <ClInclude Include="jsRotationalResponseSpectrum.h" />
+    <ClInclude Include="jsRotationalStiffness.h" />
+    <ClInclude Include="jsRotationalStiffnessPerUnitLength.h" />
+    <ClInclude Include="jsRotationalVelocity.h" />
+    <ClInclude Include="jsRotationPerLength.h" />
+    <ClInclude Include="jsSecondMomentOfArea.h" />
+    <ClInclude Include="jsSectionModulus.h" />
+    <ClInclude Include="jsSpecificHeat.h" />
+    <ClInclude Include="jsStress.h" />
+    <ClInclude Include="jsTemperatureDifference.h" />
+    <ClInclude Include="jsTemperatureGradient.h" />
+    <ClInclude Include="jsThermalExpansionCoeff.h" />
+    <ClInclude Include="jsTime.h" />
+    <ClInclude Include="jsTorsionalStiffness.h" />
+    <ClInclude Include="jsTQuantity.h" />
+    <ClInclude Include="jsTranslationalDamping.h" />
+    <ClInclude Include="jsTranslationalFlexibility.h" />
+    <ClInclude Include="jsTranslationalQuadraticDamping.h" />
+    <ClInclude Include="jsTranslationalStiffness.h" />
+    <ClInclude Include="jsTranslationalStiffnessPerUnitLength.h" />
+    <ClInclude Include="jsUnitClass.h" />
+    <ClInclude Include="jsUnits.h" />
+    <ClInclude Include="jsUnits_config.h" />
+    <ClInclude Include="jsVelocity.h" />
+    <ClInclude Include="jsVelocityResponseSpectrum.h" />
+    <ClInclude Include="jsVolume.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\boost.1.77.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.77.0.0\build\boost.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost.1.77.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.77.0.0\build\boost.targets'))" />
+  </Target>
+</Project>

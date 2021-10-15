@@ -17,6 +17,7 @@ namespace DNVS {namespace MoFa {namespace Units {
         LengthY(const LengthY& other) = default;
         LengthY(const Length& other) : Length(other) {}
         LengthY(const Quantity<LengthDimension>& other) : Length(other) {}
+        LengthY(const QuantityBase<LengthDimension>& other) : Length(other) {}
         LengthY(const NamedQuantity<LengthDimension>& other) : Length(other) {}
         explicit LengthY(double value) : Length(value) {}
         LengthY() {}

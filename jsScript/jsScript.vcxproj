@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{01A6983E-20DE-4B26-AA80-F9F86AA1C7E0}</ProjectGuid>
+    <RootNamespace>jsScript</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)..\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <PreprocessorDefinitions>JSSCRIPT_IMPLEMENTATION;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Formatting.lib;Services.lib;Scripting.lib;Units.lib;Reflection.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>..</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251;4275</DisableSpecificWarnings>
+      <PreprocessorDefinitions>JSSCRIPT_IMPLEMENTATION;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>Formatting.lib;Services.lib;Scripting.lib;Units.lib;Reflection.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AutoCompletion\CompositeAutoCompletionContext.cpp" />
+    <ClCompile Include="AutoCompletion\jsAutoCompletion.cpp" />
+    <ClCompile Include="AutoCompletion\jsAutoCompletionContext.cpp" />
+    <ClCompile Include="AutoCompletion\jsAutoCompletionService.cpp" />
+    <ClCompile Include="AutoCompletion\ReflectionAutoCompletionContext.cpp" />
+    <ClCompile Include="Documentation\ReflectionMember.cpp" />
+    <ClCompile Include="Documentation\ReflectionType.cpp" />
+    <ClCompile Include="Documentation\ScriptMember.cpp" />
+    <ClCompile Include="Documentation\ScriptType.cpp" />
+    <ClCompile Include="Documentation\TypeMap.cpp" />
+    <ClCompile Include="jsAndOrOperators.cpp" />
+    <ClCompile Include="jsArray.cpp" />
+    <ClCompile Include="jsArrayHelpers.cpp" />
+    <ClCompile Include="jsArrayToContainerAlternativeConverter.cpp" />
+    <ClCompile Include="jsClass.cpp" />
+    <ClCompile Include="jsConstructor.cpp" />
+    <ClCompile Include="jsContainerConverter.cpp" />
+    <ClCompile Include="jsConversions.cpp" />
+    <ClCompile Include="jsDocumentation.cpp" />
+    <ClCompile Include="jsDummyTypeLibrary.cpp" />
+    <ClCompile Include="jsFunction.cpp" />
+    <ClCompile Include="jsInterpreter.cpp" />
+    <ClCompile Include="jsInterpreterInternal.cpp" />
+    <ClCompile Include="jsMath.cpp" />
+    <ClCompile Include="jsMember.cpp" />
+    <ClCompile Include="jsMemberLogger.cpp" />
+    <ClCompile Include="jsMemberWithArguments.cpp" />
+    <ClCompile Include="jsModelObject.cpp" />
+    <ClCompile Include="jsProperty.cpp" />
+    <ClCompile Include="jsQuantity.cpp" />
+    <ClCompile Include="jsReference.cpp" />
+    <ClCompile Include="jsScopedDummyMode.cpp" />
+    <ClCompile Include="jsScriptable.cpp" />
+    <ClCompile Include="jsScriptConversionGraph.cpp" />
+    <ClCompile Include="jsStack.cpp" />
+    <ClCompile Include="jsStackElement.cpp" />
+    <ClCompile Include="jsStringOrNumber.cpp" />
+    <ClCompile Include="jsTypeFormatter.cpp" />
+    <ClCompile Include="jsTypeInfo.cpp" />
+    <ClCompile Include="jsTypeLibrary.cpp" />
+    <ClCompile Include="jsUnion.cpp" />
+    <ClCompile Include="jsUnit.cpp" />
+    <ClCompile Include="jsUnitConversion.cpp" />
+    <ClCompile Include="jsUnitFormatter.cpp" />
+    <ClCompile Include="jsUnitValue.cpp" />
+    <ClCompile Include="jsValue.cpp" />
+    <ClCompile Include="jsValueWithOwner.cpp" />
+    <ClCompile Include="jsVTBL.cpp" />
+    <ClCompile Include="Reflection\jsArray.Reflection.cpp" />
+    <ClCompile Include="Reflection\jsValue.Reflection.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AutoCompletion\CompositeAutoCompletionContext.h" />
+    <ClInclude Include="AutoCompletion\IAutoCompletionContext.h" />
+    <ClInclude Include="AutoCompletion\jsAutoCompletion.h" />
+    <ClInclude Include="AutoCompletion\jsAutoCompletionContext.h" />
+    <ClInclude Include="AutoCompletion\jsAutoCompletionService.h" />
+    <ClInclude Include="AutoCompletion\ReflectionAutoCompletionContext.h" />
+    <ClInclude Include="ClassTypeGetter.h" />
+    <ClInclude Include="Documentation\IMember.h" />
+    <ClInclude Include="Documentation\IType.h" />
+    <ClInclude Include="Documentation\ReflectionMember.h" />
+    <ClInclude Include="Documentation\ReflectionType.h" />
+    <ClInclude Include="Documentation\ScriptMember.h" />
+    <ClInclude Include="Documentation\ScriptType.h" />
+    <ClInclude Include="Documentation\TypeMap.h" />
+    <ClInclude Include="IScriptingPropertyService.h" />
+    <ClInclude Include="jsAndOrOperators.h" />
+    <ClInclude Include="jsArray.h" />
+    <ClInclude Include="jsArrayHelpers.h" />
+    <ClInclude Include="jsArrayToContainerAlternativeConverter.h" />
+    <ClInclude Include="jsClass.h" />
+    <ClInclude Include="jsCollections.h" />
+    <ClInclude Include="jsConstructor.h" />
+    <ClInclude Include="jsContainerConverter.h" />
+    <ClInclude Include="jsConversions.h" />
+    <ClInclude Include="jsDocumentation.h" />
+    <ClInclude Include="jsDummyTypeLibrary.h" />
+    <ClInclude Include="jsEnum.h" />
+    <ClInclude Include="jsEvaluateSyntax.h" />
+    <ClInclude Include="jsExceptions.h" />
+    <ClInclude Include="jsFunction.h" />
+    <ClInclude Include="jsInterpreter.h" />
+    <ClInclude Include="jsInterpreterInternal.h" />
+    <ClInclude Include="jsInvoker.h" />
+    <ClInclude Include="jsMath.h" />
+    <ClInclude Include="jsMathImpl.h" />
+    <ClInclude Include="jsMember.h" />
+    <ClInclude Include="jsMemberLogger.h" />
+    <ClInclude Include="jsMemberWithArguments.h" />
+    <ClInclude Include="jsModelObject.h" />
+    <ClInclude Include="jsProperty.h" />
+    <ClInclude Include="jsQuantity.h" />
+    <ClInclude Include="jsReference.h" />
+    <ClInclude Include="jsReflectionHelpers.h" />
+    <ClInclude Include="jsScopedDummyMode.h" />
+    <ClInclude Include="jsScriptable.h" />
+    <ClInclude Include="jsScriptConversionGraph.h" />
+    <ClInclude Include="jsScript_config.h" />
+    <ClInclude Include="jsStack.h" />
+    <ClInclude Include="jsStackElement.h" />
+    <ClInclude Include="jsStringOrNumber.h" />
+    <ClInclude Include="jsType.h" />
+    <ClInclude Include="jsTypeConverter.h" />
+    <ClInclude Include="jsTypeFormatter.h" />
+    <ClInclude Include="jsTypeInfo.h" />
+    <ClInclude Include="jsTypeLibrary.h" />
+    <ClInclude Include="jsUnion.h" />
+    <ClInclude Include="jsUnit.h" />
+    <ClInclude Include="jsUnitConversion.h" />
+    <ClInclude Include="jsUnitFormatter.h" />
+    <ClInclude Include="jsUnitValue.h" />
+    <ClInclude Include="jsValue.h" />
+    <ClInclude Include="jsValueIterator.h" />
+    <ClInclude Include="jsValueWithOwner.h" />
+    <ClInclude Include="jsVTBL.h" />
+    <ClInclude Include="properties.hpp" />
+    <ClInclude Include="Reflection\jsArray.Reflection.h" />
+    <ClInclude Include="Reflection\jsValue.Reflection.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\boost.1.77.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.77.0.0\build\boost.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost.1.77.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.77.0.0\build\boost.targets'))" />
+  </Target>
+</Project>
