@@ -23,6 +23,8 @@
 #include "Reflection/Utilities/MemberUtilities.h"
 #include "BoundaryCondition.h"
 #include "Reflection/Layout/GridElements.h"
+#include "Reflection/Attributes/SymmetryAttribute.h"
+#include "Reflection/Attributes/HeaderAttribute.h"
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { namespace Tests {
 
@@ -52,6 +54,16 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { nam
     protected:
         TypeLibraries::TypeLibraryPointer typeLibrary;
     };
+
+    TEST_F(ControlNodeLayoutTests, CreateLayoutFromSplitNumberOrEnum)
+    {
+        using namespace Classes;
+        Reflect<MyTestClassForLayout::EnumOrDouble>(typeLibrary, "EnumOrDouble");
+        Class<MyTestClassForLayout> cls(typeLibrary, "MyTestClassForLayout");
+        auto& member = cls.Get("Enum1", &MyTestClassForLayout::GetEnumOrValue).AddAttribute<LayoutAttribute>(EmbeddedElement(HorizontalElements(Slider("option", "Enum1"), TextBox("value", ""))));
+        EXPECT_EQ(HorizontalElements(Slider("Option", "Enum1"), TextBox("Value", "")), *BuildMemberLayout(&member));
+    }
+    
     TEST_F(ControlNodeLayoutTests, AutodetectLayoutFromPropertyGet_NoPredefinedLayout)
     {
         using namespace Classes;
@@ -379,7 +391,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { nam
             .AddSignature("a", "b")
             .AddArgumentAttribute<CaptionAttribute>("a", "A");
         cls.SetGet("Option", &UtilityClass::SetOption, &UtilityClass::GetOption);
-        EXPECT_EQ(VerticalElements(TextBox("__this__", "UtilityClass"), TextBox("a", "A"), TextBox("b", "b"), TextBox("Option", "Option")), *BuildMemberLayout(&fn));
+        EXPECT_EQ(VerticalElements(TextBox("a", "A"), TextBox("b", "b"), TextBox("Option", "Option")), *BuildMemberLayout(&fn));
     }
 
     TEST_F(ControlNodeLayoutTests, TestDefaultTab)
@@ -427,7 +439,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { nam
             .AddAttribute<CaptionAttribute>("Choice");
         cls.SetGet("Option", &UtilityClass::SetOption, &UtilityClass::GetOption)
             .AddAttribute<CaptionAttribute>("Value");
-        EXPECT_EQ(GridElements(1,2,CheckBox("OptionBool", "Choice"), TextBox("Option", "Value")), *BuildTypeLayout<UtilityClass>());
+        EXPECT_EQ(VerticalElements(HorizontalElements(CheckBox("OptionBool", "Choice"), TextBox("Option", "Value"))), *BuildTypeLayout<UtilityClass>());
     }
 
     TEST_F(ControlNodeLayoutTests, TestIndividualRadioButtonLayout)
@@ -637,13 +649,19 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { nam
         ASSERT_NE(constructor, nullptr);
         auto layout = BuildMemberLayout(constructor);
         EXPECT_EQ(*layout,
-            GridElements(6, 2,
-                Slider("Option", "Dx"), VerticalElements(Caption("Spring stiffness"), TextBox("Value", "")), 
-                Slider("Option", "Dy"), TextBox("Value", ""), 
-                Slider("Option", "Dz"), TextBox("Value", ""), 
-                Slider("Option", "Rx"), VerticalElements(Caption("Spring stiffness"), TextBox("Value", "")), 
-                Slider("Option", "Ry"), TextBox("Value", ""), 
-                Slider("Option", "Rz"), TextBox("Value", "")
+            VerticalElements(
+                CheckBox("TranslationalSymmetry", "Let Dy and Dz equal Dx"),
+                GridElements(3, 2,
+                    Slider("Option", "Dx"), VerticalElements(Caption("Spring stiffness"), TextBox("Value", "")),
+                    Slider("Option", "Dy"), TextBox("Value", ""),
+                    Slider("Option", "Dz"), TextBox("Value", "")
+                ),
+                CheckBox("RotationalSymmetry", "Let Ry and Rz equal Rx"),
+                GridElements(3, 2,
+                    Slider("Option", "Rx"), VerticalElements(Caption("Spring stiffness"), TextBox("Value", "")),
+                    Slider("Option", "Ry"), TextBox("Value", ""),
+                    Slider("Option", "Rz"), TextBox("Value", "")
+                )
             )
         );
     }
@@ -665,4 +683,69 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { nam
         auto layout = BuildMemberLayout(util.GetMember("DoExport"));
         EXPECT_EQ(*layout, VerticalElements(TextBox("Value", "Value")));
     }
+
+
+    TEST_F(ControlNodeLayoutTests, DetectOverloadSelector_SameSelectorForTwoDynamicAreas)
+    {
+        using namespace Classes;
+        Reflect<A>(typeLibrary);
+
+        Class<B> cls(typeLibrary, "B");
+        cls.SetGet("A", &B::SetA, &B::GetA)
+            .AddAttribute<ExpandMemberAttribute>(ExpandOptions::CanExpand)
+            .AddAttribute<CaptionAttribute>("My A")
+            .AddAttribute<LayoutAttribute>(OverloadSelector(VerticalElements(SelectorLookup("A"), DynamicArea())));
+        cls.SetGet("A2", &B::SetA2, &B::GetA2)
+            .AddAttribute<ExpandMemberAttribute>(ExpandOptions::CanExpand)
+            .AddAttribute<CaptionAttribute>("My A2")
+            .AddAttribute<LayoutAttribute>(OverloadSelector(VerticalElements(SelectorLookup("A"), DynamicArea())));
+
+        Members::MemberPointer member =
+            &cls.Constructor<const A&, const A&>()
+            .AddSignature("a", "a2")
+            .AddAttribute<LayoutAttribute>(VerticalElements(
+                Selector(Buttons("A")),
+                HorizontalElements("A", "A2")));
+
+        auto layout = BuildMemberLayout(member);
+        EXPECT_EQ(*layout,
+            VerticalElements(
+                Selector(Buttons("__SELECTOR__", "A"), false),
+                HorizontalElements(
+                    OverloadSelector("A", VerticalElements(SelectorLookup("A"), DynamicArea())),
+                    OverloadSelector("A2", VerticalElements(SelectorLookup("A"), DynamicArea()))
+                )
+            ));
+    }
+
+    TEST_F(ControlNodeLayoutTests, GridWithAutomatedColumn)
+    {
+        using namespace Classes;
+        Reflect<MyRow>(typeLibrary);
+        Class<MyGrid> cls(typeLibrary, "MyGrid");
+        auto& prop = cls.SetGet("Rows", &MyGrid::SetRows, &MyGrid::GetRows)
+            .AddAttribute<LayoutAttribute>(Grid());
+
+        auto layout = BuildMemberLayout(&prop);
+        auto myGrid = std::dynamic_pointer_cast<Grid>(layout);
+        ASSERT_NE(myGrid, nullptr);
+        EXPECT_EQ(Grid("Rows", "", HorizontalElements(TextBox("X", "X"), TextBox("Y", "Y"), TextBox("Layers", "Number of layers")), 6), *layout);
+    }
+
+
+    TEST_F(ControlNodeLayoutTests, DISABLED_TableWithPropertyColumn)
+    {
+        using namespace Classes;
+        Class<B> cls(typeLibrary, "B");
+        auto& prop = cls.Get("AllA", &B::GetAllA)
+            .AddAttribute<HeaderAttribute>(DefaultColumn("A"), PropertyColumn("X"), PropertyColumn("I", "Index"));
+
+        auto layout = BuildMemberLayout(&prop);
+        EXPECT_EQ(Table("AllA", "AllA", Header(DefaultColumn("A"), PropertyColumn("X"), PropertyColumn("I", "Index")), 6), *layout);
+    }
+
+
+
+
+
 }}}}}

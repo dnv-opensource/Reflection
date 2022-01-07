@@ -23,4 +23,5 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
     void TryAddFunctionArgumentNode(ControlNode& node, const Members::MemberPointer& member, size_t index);
     
     ControlNode* LookupRelatedNode(ControlNode& node, const std::shared_ptr<Layout::ControlElement>& element);
+    std::shared_ptr<ControlNode> GetOrCreateNestedNode(ControlNode& node, const std::shared_ptr<Layout::ControlElement>& element);
 }}}}

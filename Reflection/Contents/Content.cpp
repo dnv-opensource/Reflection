@@ -14,6 +14,7 @@
 #include "Impl/ContentUtility.h"
 #include "IContent.h"
 #include "AssignmentContent.h"
+#include "../Types/DynamicTypeTraits.h"
 
 namespace DNVS {namespace MoFa {namespace Reflection { namespace Contents { 
 
@@ -111,7 +112,13 @@ namespace DNVS {namespace MoFa {namespace Reflection { namespace Contents {
     bool Content::IsConvertibleTo(const Types::DecoratedTypeInfo& typeInfo) const
     {
         if (IsNull())
-            return ContentUtility::IsContainerType(Services::ServiceProvider::Instance().GetService<TypeLibraries::ITypeLibrary>(), typeInfo);
+        {
+            if (Types::IsPointer(typeInfo))
+                return true;
+            if (ContentUtility::IsContainerType(Services::ServiceProvider::Instance().GetService<TypeLibraries::ITypeLibrary>(), typeInfo))
+                return true;
+            return false;
+        }
         return m_content->IsConvertibleTo(typeInfo);
     }
 
@@ -151,7 +158,12 @@ namespace DNVS {namespace MoFa {namespace Reflection { namespace Contents {
     Objects::Object Content::GetObjectConvertTo(const Types::DecoratedTypeInfo& typeInfo) const
     {
         if (IsNull())
-            return ContentUtility::TryCreateContainer(Services::ServiceProvider::Instance().GetService<TypeLibraries::ITypeLibrary>(), typeInfo);
+        {
+            if (Types::IsPointer(typeInfo))
+                return Objects::Object(Services::ServiceProvider::Instance().GetService<TypeLibraries::ITypeLibrary>(), Variants::Variant(nullptr, typeInfo));
+            else
+                return ContentUtility::TryCreateContainer(Services::ServiceProvider::Instance().GetService<TypeLibraries::ITypeLibrary>(), typeInfo);
+        }            
         return m_content->GetObjectConvertTo(typeInfo);
     }
 

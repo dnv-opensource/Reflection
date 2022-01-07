@@ -11,14 +11,30 @@ namespace DNVS {namespace MoFa {namespace Services {
     class ScopedServiceRegistration
     {
     public:        
-        ScopedServiceRegistration(std::shared_ptr<T> service)
+        ScopedServiceRegistration(std::shared_ptr<T> service, ServiceProvider& serviceProvider)
+            : m_serviceProvider(serviceProvider)
         {
-            DNVS::MoFa::Services::ServiceProvider::Instance().RegisterService(service);
+            m_oldService = m_serviceProvider.TryGetService<T>();
+            if (service)
+                m_serviceProvider.RegisterService(service);
+            else
+                m_serviceProvider.UnregisterService<T>();
+        }
+
+        ScopedServiceRegistration(std::shared_ptr<T> service)
+            :ScopedServiceRegistration(service, DNVS::MoFa::Services::ServiceProvider::Instance())
+        {
         }
         ~ScopedServiceRegistration()
         {
-            DNVS::MoFa::Services::ServiceProvider::Instance().UnregisterService<T>();
+            if (m_oldService)
+                m_serviceProvider.RegisterService(m_oldService);
+            else
+                m_serviceProvider.UnregisterService<T>();
         }
+    private:
+        std::shared_ptr<T> m_oldService;
+        ServiceProvider& m_serviceProvider;
     };
     template<typename T, typename U, typename... Args>
     std::unique_ptr<ScopedServiceRegistration<T>> ConditionallyCreateScopedServiceRegistration(Args&&... args)

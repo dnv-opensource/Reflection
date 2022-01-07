@@ -55,7 +55,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {
 
         cls.SetGet("Dx", &BoundaryCondition::SetDx, &BoundaryCondition::GetDx)
             .AddAttribute<DefaultAttribute>(BoundaryType::Fixed)
-            .AddAttribute<LayoutAttribute>(SliderAndTextBoxWithHeader("Dx", "Spring stiffness"));
+            .AddAttribute<LayoutAttribute>(VerticalElements(Auto<bool>("TranslationalSymmetry","Let Dy and Dz equal Dx"),SliderAndTextBoxWithHeader("Dx", "Spring stiffness")));
         cls.SetGet("Dy", &BoundaryCondition::SetDy, &BoundaryCondition::GetDy)
             .AddAttribute<DefaultAttribute>(BoundaryType::Fixed)
             .AddAttribute<LayoutAttribute>(SliderAndTextBox("Dy"));
@@ -64,7 +64,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {
             .AddAttribute<LayoutAttribute>(SliderAndTextBox("Dz"));
         cls.SetGet("Rx", &BoundaryCondition::SetRx, &BoundaryCondition::GetRx)
             .AddAttribute<DefaultAttribute>(BoundaryType::Fixed)
-            .AddAttribute<LayoutAttribute>(SliderAndTextBoxWithHeader("Rx", "Spring stiffness"));
+            .AddAttribute<LayoutAttribute>(VerticalElements(Auto<bool>("RotationalSymmetry", "Let Ry and Rz equal Rx"), SliderAndTextBoxWithHeader("Rx", "Spring stiffness")));
         cls.SetGet("Ry", &BoundaryCondition::SetRy, &BoundaryCondition::GetRy)
             .AddAttribute<DefaultAttribute>(BoundaryType::Fixed)
             .AddAttribute<LayoutAttribute>(SliderAndTextBox("Ry"));

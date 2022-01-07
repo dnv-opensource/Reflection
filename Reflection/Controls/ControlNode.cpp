@@ -9,6 +9,7 @@
 #include "ControlNodeManager.h"
 #include "Aspects/CustomAttributeCollectionAspect.h"
 #include "Aspects/TypeAspect.h"
+#include "boost/algorithm/string/split.hpp"
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
     
@@ -216,6 +217,21 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 
     std::shared_ptr<ControlNode> ControlNode::LookupRelatedNode(const std::string& name, int recursionLevelParent, int recursionLevelChild) const
     {
+        if (name.find('.') != std::string::npos)
+        {
+            std::vector<std::string> nested;
+            boost::algorithm::split(nested, name, [](char c) {return c == '.'; });
+            std::shared_ptr<ControlNode> node = LookupRelatedNode(nested.at(0), recursionLevelParent, recursionLevelChild);
+            if (!node)
+                return nullptr;
+            for (size_t i = 1; i < nested.size(); ++i)
+            {
+                node = node->GetChild(nested.at(i));
+                if (!node)
+                    return nullptr;
+            }
+            return node;
+        }
         for (const auto& child : m_children)
         {
             if (_strcmpi(child->GetName().c_str(), name.c_str()) == 0)

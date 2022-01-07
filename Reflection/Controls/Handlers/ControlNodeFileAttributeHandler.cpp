@@ -3,7 +3,7 @@
 //  Distributed under the Boost Software License, Version 1.0.
 //  See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt
-#include "ControlNodeSaveFileAttributeHandler.h"
+#include "ControlNodeFileAttributeHandler.h"
 #include "Reflection/Attributes/DefaultAttribute.h"
 #include "Reflection/Controls/Aspects/IsAliasAspect.h"
 #include "Reflection/Controls/Aspects/FunctionAspect.h"
@@ -14,13 +14,18 @@
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 
-    bool ControlNodeSaveFileAttributeHandler::OnInitialize(ControlNode& node, const Attributes::SaveFileAttribute& saveFileAttribute, bool priorState)
+    bool ControlNodeFileAttributeHandler::OnInitialize(ControlNode& node, const Attributes::FileAttribute& fileAttribute, bool priorState)
     {
-        if (!saveFileAttribute.GetJournallingRequired())
+        if (!fileAttribute.GetJournallingRequired())
         {
             auto journalled = std::make_shared<ControlNode>(&node, Types::TypeId<bool>(), Attributes::DefaultAttribute(Attributes::StoreDefault, false));
             journalled->SetName("journalled");
-            journalled->SetCaption("Journal export operation");
+            if(!fileAttribute.GetJournallingRequiredCaption().empty())
+                journalled->SetCaption(fileAttribute.GetJournallingRequiredCaption());
+            if(fileAttribute.GetFileMode() == Attributes::FileMode::Save)
+                journalled->SetCaption("Journal export operation");
+            else
+                journalled->SetCaption("Journal import operation");
             node.AddChild(journalled);
         }
         auto extension = std::make_shared<ControlNode>(&node, Types::TypeId<std::string>(), "Extension");

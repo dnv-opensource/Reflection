@@ -14,6 +14,9 @@
 #include "Reflection/Utilities/MemberItem.h"
 #include "Reflection/Attributes/IgnoreInViewAttribute.h"
 #include "../../Attributes/AttributeCollectionService.h"
+#include "boost/algorithm/string/split.hpp"
+#include "../Aspects/TypeAspect.h"
+#include "../../Attributes/ContextAttribute.h"
 
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
@@ -69,7 +72,26 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
             }
         }
     }
-
+    std::set<Members::MemberPointer> TryFilterContext(ControlNode& node, const std::set<Members::MemberPointer>& members)
+    {
+        const ContextAttribute* context = node.TryGetAttribute<ContextAttribute>();
+        std::set<Members::MemberPointer> filtered;
+        for (const Members::MemberPointer& member : members)
+        {
+            if (context)
+            {
+                if (const ContextAttribute* memberContext = GetPointerToAttributeOrNull<ContextAttribute>(member))
+                {
+                    if (!context->SharedContext(*memberContext))
+                        continue;
+                }
+            }
+            if(GetPointerToAttributeOrNull<IgnoreInViewAttribute>(member))
+                continue;
+            filtered.insert(member);
+        }
+        return filtered;
+    }
     void TryAddConstructorSelector(ControlNode& node)
     {
         if (node.TryGetAspect<IsFunctionalNodeAspect>() || node.TryGetAspect<SelectedConstructorAspect>())
@@ -79,7 +101,21 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
         auto service = Utilities::ConstructorsFromTypeService::GetService(node.GetTypeLibrary());
         if (service)
         {
-            auto constructors = service->CollectAllConstructorMembersOfThisAndDerivedClasses(node.GetDecoratedTypeInfo(), false);
+            bool isNested = false;
+            ControlNode* parent = node.GetParent();
+            while (parent)
+            {
+                if (const ConstructorSelectorAspect* aspect = parent->TryGetAspect<ConstructorSelectorAspect>())
+                {
+                    if (aspect && aspect->GetDecoratedTypeInfo() == node.GetDecoratedTypeInfo())
+                    {
+                        isNested = true;
+                        break;
+                    }
+                }
+                parent = parent->GetParent();
+            }
+            auto constructors = TryFilterContext(node, service->CollectAllConstructorMembersOfThisAndDerivedClasses(node.GetDecoratedTypeInfo(), !isNested));
             auto selectorNode = std::make_shared<ControlNode>(&node);
             selectorNode->SetDecoratedTypeInfo(Types::TypeId<Utilities::MemberItem>());
             selectorNode->AddAspect<ConstructorSelectorAspect>(node.GetDecoratedTypeInfo(), constructors);
@@ -129,6 +165,38 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
         if (_strcmpi(element->GetName().c_str(), node.GetName().c_str()) == 0)
             return &node;
         return node.LookupRelatedNode(element->GetName(), 0, 1).get();
+    }
+
+    std::shared_ptr<ControlNode> GetOrCreateNestedNode(ControlNode& node, const std::shared_ptr<Layout::ControlElement>& element)
+    {
+        std::vector<std::string> nested;
+        boost::algorithm::split(nested, element->GetName(), [](char c) {return c == '.'; });
+        ControlNode* current = node.GetParent();
+        std::shared_ptr<ControlNode> nestedNode;
+        for (size_t i = 0; i < nested.size(); ++i)
+        {
+            if (!current)
+                return nullptr;
+            const std::string& name = nested[i];
+            if (current->HasChild(name))
+                nestedNode = current->GetChild(name);
+            else
+            {
+                if (i == 0)
+                    return nullptr;
+                auto member = current->GetAspect<TypeAspect>().GetType()->Lookup(name, Variants::Variant());
+                if (member)
+                {
+                    auto child = std::make_shared<ControlNode>(current, member);
+                    child->SetName(name);
+                    current->AddChild(child);
+                    nestedNode = child;
+                }
+            }
+            if (nestedNode)
+                current = nestedNode.get();
+        }
+        return nestedNode;
     }
 
 }}}}

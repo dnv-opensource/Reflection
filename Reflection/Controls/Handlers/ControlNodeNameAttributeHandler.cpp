@@ -9,9 +9,8 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 
     bool ControlNodeNameAttributeHandler::OnInitialize(ControlNode& node, const Attributes::NameAttribute& nameAttribute, bool priorState)
     {
-        if (node.GetParent())
-            return priorState;
-        node.SetName("__this__");
+        if (!node.GetParent())
+            node.SetName("__this__");
         node.SetCaption(nameAttribute.GetCaption());
         return priorState;
     }

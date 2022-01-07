@@ -18,7 +18,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
         bool OnInitialize(ControlNode& node, const std::shared_ptr<Layout::ControlElement>& element, bool priorState = false);
 		bool OnInitialize(ControlNode& node, const std::shared_ptr<Layout::Grid>& element, bool priorState = false);
     private:
-        void SetData(ControlNode& node, const Layout::ControlElement& element);
+        void SetData(ControlNode& node, const Layout::ControlElement& element, bool forceName = false);
 		void SetGridData(ControlNode& node, const Layout::Grid& element);
     };
 }}}}

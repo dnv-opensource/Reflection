@@ -29,7 +29,11 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
                 {
                     TypeLibraries::TypeWithBases wrapperType(type, node.GetTypeLibrary());
                     for (const auto& memberName : wrapperType.GetUnsortedMembers())
-                        TryAddMemberNode(node, wrapperType.Lookup(memberName, Variants::Variant()));
+                    {
+                        auto member = wrapperType.Lookup(memberName, Variants::Variant());
+                        if(member->GetMemberType() != Members::MemberType::TypeConstructor)
+                            TryAddMemberNode(node, wrapperType.Lookup(memberName, Variants::Variant()));
+                    }
                 }
             }
         }

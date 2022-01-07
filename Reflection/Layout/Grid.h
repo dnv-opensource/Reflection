@@ -11,7 +11,6 @@
 #include "Reflection/Members/IMember.h"
 #include "HorizontalElements.h"
 #include "VerticalElements.h"
-#include "Transformers/NestedPropertyHandler.h"
 #include "ClonableLayoutPointer.h"
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
@@ -128,19 +127,9 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
         void SetHeader(const HorizontalElements& header) { m_header = header; }
         void SetInitialNumberOfRows(size_t initialNumberOfRows) { m_initialNumberOfRows = initialNumberOfRows; }
         void SetHasSorting(TypeUtilities::Tribool hasSorting) { m_hasSorting = hasSorting; }
-        void SetFunction(const Members::MemberPointer& function) { m_function = function; }
-        Members::MemberPointer GetFunction() const { return m_function; }
 
         const std::shared_ptr<VerticalElements>& GetFixedGrid() const { return m_fixedGrid; }
         void SetFixedGrid(const std::shared_ptr<VerticalElements>& fixedGrid) { m_fixedGrid = fixedGrid; }
-        void SetPropertyHandler(std::shared_ptr<NestedPropertyHandler>&& handler)
-        {
-            m_handler = std::move(handler);
-        }
-        std::shared_ptr<NestedPropertyHandler> GetPropertyHandler() const
-        {
-            return m_handler;
-        }
         bool GetCanAddRemoveRows() const { return m_canAddRemoveRows; }
         void SetCanAddRemoveRows(bool value) { m_canAddRemoveRows = value; }
 		template<typename AttributeT, typename... Args>
@@ -151,12 +140,10 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
 		}
 	private:
         bool m_canAddRemoveRows;
-        std::shared_ptr<NestedPropertyHandler> m_handler;
         size_t m_initialNumberOfRows;
         HorizontalElements m_header;
         ClonableLayoutPointer<VerticalElements> m_fixedGrid;
         TypeUtilities::Tribool m_hasSorting;
-        Members::MemberPointer m_function;
     };
 
 }}}}

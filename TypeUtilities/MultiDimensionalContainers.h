@@ -19,8 +19,33 @@ public:
   static Point3D Construct(const std::vector<double>& components) {return Point3D(components.at(0),components.at(1),components.at(2));}
 };
 */
+    template<typename T, typename MultiDimensionalTraitsT>
+    class MultiDimensionalSorterNoTolerance {
+    public:
+        using ComponentSorter = typename MultiDimensionalTraitsT::ComponentSorter;
+        bool operator()(const T& lhs, const T& rhs) const {
+            for (size_t i = 0; i < MultiDimensionalTraitsT::GetComponentSize(); ++i)
+            {
+                if (MultiDimensionalTraitsT::GetComponent(lhs, i) != MultiDimensionalTraitsT::GetComponent(rhs, i))
+                    return m_sorter(MultiDimensionalTraitsT::GetComponent(lhs, i), MultiDimensionalTraitsT::GetComponent(rhs, i));
+            }
+            return false;
+        }
+    private:
+        ComponentSorter m_sorter;
+    };
 
-template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
+    struct KeyFromMapTraits {
+        template<typename T>
+        static const auto& GetKey(const T& value) { return value.first; }
+    };
+    struct KeyFromSetTraits {
+        template<typename T>
+        static const T& GetKey(const T& value) { return value; }
+    };
+
+
+    template<typename KeyT, typename MultiDimensionalTraitsT, typename KeyTraitsT, typename AllocatorT>
     class MultiDimensionalComponents
     {
     public:
@@ -85,8 +110,8 @@ template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
         {
             if (index == candidate.size())
             {
-                auto it = container.find(MultiDimensionalTraitsT::Construct(candidate));
-                if (it != container.end())
+                auto range = container.equal_range(MultiDimensionalTraitsT::Construct(candidate));
+                for(auto it = range.first; it != range.second; ++it)
                     found.emplace_back(it);
             }
             else
@@ -99,29 +124,34 @@ template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
                 }
             }
         }
+        template<typename ContainerT>
+        std::list<std::list<typename ContainerT::const_iterator>> FindOverlaps(const ContainerT& container, ComponentType tolerance) const
+        {
+            std::set<KeyT, MultiDimensionalSorterNoTolerance<KeyT, MultiDimensionalTraitsT>> usedKeys;
+            std::list<std::list<typename ContainerT::const_iterator>> items;
+            for (auto it = container.begin(); it != container.end(); ++it)
+            {
+                const auto& key = KeyTraitsT::GetKey(*it);
+                if (usedKeys.count(key) > 0)
+                    continue;
+
+                auto overlaps = FindInBox(container, key, tolerance);
+                if (overlaps.size() > 1)
+                {
+                    items.emplace_back(overlaps);
+                    for (const auto& overlap : overlaps)
+                        usedKeys.insert(KeyTraitsT::GetKey(*overlap));
+                }
+            }
+            return items;
+        }
+
     private:
         //If KeyT is Point3d, m_components will store a map of all unique X, Y and Z values, and their use count.
         std::vector<ComponentMap, AllocatorT> m_components;
     };
 
-    template<typename T, typename MultiDimensionalTraitsT>
-    class MultiDimensionalSorterNoTolerance {
-    public:
-        using ComponentSorter = typename MultiDimensionalTraitsT::ComponentSorter;
-        bool operator()(const T& lhs, const T& rhs) const {
-            for (size_t i = 0; i < MultiDimensionalTraitsT::GetComponentSize(); ++i)
-            {
-                if (MultiDimensionalTraitsT::GetComponent(lhs, i) != MultiDimensionalTraitsT::GetComponent(rhs, i))
-                    return m_sorter(MultiDimensionalTraitsT::GetComponent(lhs, i), MultiDimensionalTraitsT::GetComponent(rhs, i));
-            }
-            return false;
-        }
-    private:
-        ComponentSorter m_sorter;
-    };
-
-
-    template<typename InternalContainer, typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
+    template<typename InternalContainer, typename KeyT, typename MultiDimensionalTraitsT, typename KeyTraitsT, typename AllocatorT>
     class MultiDimensionalTree
     {
     public:
@@ -168,6 +198,12 @@ template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
         {
             return m_components.FindInBox(m_container, key, tolerance);
         }
+
+        std::list<std::list<const_iterator>> FindOverlaps(ComponentType tolerance) const
+        {
+            return m_components.FindOverlaps(m_container, tolerance);
+        }
+
         size_type erase(const key_type& _Keyval)
         {
             size_type count = m_container.erase(_Keyval);
@@ -176,7 +212,7 @@ template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
         }
         iterator erase(const_iterator _Where)
         {
-            m_components.Erase(*_Where, 1);
+            m_components.Erase(KeyTraitsT::GetKey(*_Where), 1);
             return m_container.erase(_Where);
         }
         void clear() _NOEXCEPT {
@@ -199,11 +235,11 @@ template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
         }
     protected:
         InternalContainer m_container;
-        MultiDimensionalComponents<KeyT, MultiDimensionalTraitsT, AllocatorT> m_components;
+        MultiDimensionalComponents<KeyT, MultiDimensionalTraitsT, KeyTraitsT, AllocatorT> m_components;
     };
-    
+
     template<typename T, typename MultiDimensionalTraitsT, typename AllocatorT = std::allocator<T>>
-    class MultiDimensionalSet : public MultiDimensionalTree<std::set<T, MultiDimensionalSorterNoTolerance<T, MultiDimensionalTraitsT>, AllocatorT>, T, MultiDimensionalTraitsT, AllocatorT>
+    class MultiDimensionalSet : public MultiDimensionalTree<std::set<T, MultiDimensionalSorterNoTolerance<T, MultiDimensionalTraitsT>, AllocatorT>, T, MultiDimensionalTraitsT, KeyFromSetTraits, AllocatorT>
     {
     public:
         std::pair<iterator, bool> insert(const value_type& value)
@@ -215,7 +251,7 @@ template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
         }
     };
     template<typename T, typename MultiDimensionalTraitsT, typename AllocatorT = std::allocator<T>>
-    class MultiDimensionalMultiSet : public MultiDimensionalTree<std::multiset<T, MultiDimensionalSorterNoTolerance<T, MultiDimensionalTraitsT>, AllocatorT>, T, MultiDimensionalTraitsT, AllocatorT>
+    class MultiDimensionalMultiSet : public MultiDimensionalTree<std::multiset<T, MultiDimensionalSorterNoTolerance<T, MultiDimensionalTraitsT>, AllocatorT>, T, MultiDimensionalTraitsT, KeyFromSetTraits, AllocatorT>
     {
     public:
         iterator insert(const value_type& value)
@@ -225,8 +261,8 @@ template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
         }
     };
 
-    template<typename KeyT, typename ValueT, typename MultiDimensionalTraitsT, typename AllocatorT = std::allocator<KeyT>>
-    class MultiDimensionalMap : public MultiDimensionalTree<std::map<KeyT, ValueT, MultiDimensionalSorterNoTolerance<KeyT, MultiDimensionalTraitsT>, AllocatorT>, KeyT, MultiDimensionalTraitsT, AllocatorT>
+    template<typename KeyT, typename ValueT, typename MultiDimensionalTraitsT, typename AllocatorT = std::allocator<std::pair<KeyT const, ValueT>>>
+    class MultiDimensionalMap : public MultiDimensionalTree<std::map<KeyT, ValueT, MultiDimensionalSorterNoTolerance<KeyT, MultiDimensionalTraitsT>, AllocatorT>, KeyT, MultiDimensionalTraitsT, KeyFromMapTraits, AllocatorT>
     {
     public:
         std::pair<iterator, bool> insert(const value_type& value)
@@ -236,16 +272,25 @@ template<typename KeyT, typename MultiDimensionalTraitsT, typename AllocatorT>
                 m_components.Insert(value.first);
             return result;
         }
+		ValueT& operator[](const KeyT& _Keyval)
+		{
+			return insert(std::make_pair(_Keyval, ValueT()))->first.second;
+		}
     };
-
-    template<typename KeyT, typename ValueT, typename MultiDimensionalTraitsT, typename AllocatorT = std::allocator<T>>
-    class MultiDimensionalMultiMap : public MultiDimensionalTree<std::multimap<KeyT,ValueT, MultiDimensionalSorterNoTolerance<KeyT, MultiDimensionalTraitsT>, AllocatorT>, KeyT, MultiDimensionalTraitsT, AllocatorT>
+    
+    template<typename KeyT, typename ValueT, typename MultiDimensionalTraitsT, typename AllocatorT = std::allocator<std::pair<KeyT const, ValueT>>>
+    class MultiDimensionalMultiMap : public MultiDimensionalTree<std::multimap<KeyT,ValueT, MultiDimensionalSorterNoTolerance<KeyT, MultiDimensionalTraitsT>, AllocatorT>, KeyT, MultiDimensionalTraitsT, KeyFromMapTraits, AllocatorT>
     {
     public:
         iterator insert(const value_type& value)
         {
             m_components.Insert(value.first);
             return m_container.insert(value);
+        }
+        iterator emplace(const KeyT& key, const ValueT& value)
+        {
+            m_components.Insert(key);
+            return m_container.emplace(key, value);
         }
     };
 } } }

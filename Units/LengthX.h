@@ -16,7 +16,6 @@ namespace DNVS {namespace MoFa {namespace Units {
         LengthX(const LengthX& other) = default;
         LengthX(const Length& other) : Length(other) {}
         LengthX(const Quantity<LengthDimension>& other) : Length(other) {}
-        LengthX(const QuantityBase<LengthDimension>& other) : Length(other) {}
         LengthX(const NamedQuantity<LengthDimension>& other) : Length(other) {}
         explicit LengthX(double value) : Length(value) {}
         LengthX() {}

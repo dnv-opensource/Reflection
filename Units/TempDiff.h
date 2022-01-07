@@ -30,7 +30,6 @@ namespace DNVS {namespace MoFa {namespace Units {
     {
     public:
         Quantity(const Quantity& other) : BaseClass(other) {}
-        Quantity(const QuantityBase<TempDiffDimension>& other) : BaseClass(other) {}
         Quantity(const NamedTempDiff& other) : BaseClass(other) {}
         explicit Quantity(double value) : BaseClass(value) {}
         Quantity(){}

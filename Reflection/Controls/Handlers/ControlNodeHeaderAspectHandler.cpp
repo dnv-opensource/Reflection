@@ -10,6 +10,7 @@
 #include "ControlNodeReplaceTypeWithContainerValueTypeHandler.h"
 #include "Reflection/Controls/ControlNodeManager.h"
 #include "../Aspects/FunctionArgumentAspect.h"
+#include "../../Attributes/TupleAttribute.h"
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 
@@ -21,6 +22,8 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 			auto containerAttribute = node.TryGetAttribute<Attributes::ContainerAttribute>();
 			if (!containerAttribute)
 				return priorState;
+            if (node.TryGetAspect<RowAspect>())
+                return priorState;
 			auto manager = std::make_shared<ControlNodeManager>(node.GetTypeLibrary());
 			manager->AddHandler(new ControlNodeReplaceTypeWithContainerValueTypeHandler);
 			auto rowNode = std::make_shared<ControlNode>(manager, containerAttribute->GetValueType());			
@@ -56,14 +59,23 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 							Connect(child, columnControlElement);
 							indexedChildren.erase(ichild);
 						}
-						else
+						else if (child)
+                        {
+                            Connect(child, columnControlElement);
+                            for (auto ichild = indexedChildren.begin(); ichild != indexedChildren.end(); ++ichild)
+                            {
+                                if (ichild->second == child)
+                                {
+                                    indexedChildren.erase(ichild);
+                                    break;
+                                }
+                            }
+                        }
+				        else if (columnControlElement->GetTypeInfo().IsValid())
 						{
-							if (columnControlElement->GetTypeInfo().IsValid())
-							{
-								auto item = std::make_shared<ControlNode>(rowNode.get(), columnControlElement->GetTypeInfo());
-								Connect(item, columnControlElement);
-								rowNode->AddChild(item);
-							}
+							auto item = std::make_shared<ControlNode>(rowNode.get(), columnControlElement->GetTypeInfo());
+							Connect(item, columnControlElement);
+							rowNode->AddChild(item);
 						}
 					}
 				}
@@ -73,12 +85,30 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 		return priorState;
 	}
 
-	void ControlNodeHeaderAspectHandler::Connect(const std::shared_ptr<ControlNode>& node, const std::shared_ptr<Layout::ControlElement>& element)
+    bool ControlNodeHeaderAspectHandler::CanSetName(ControlNode& node, const Layout::ControlElement& element) const
+    {
+        if (element.HasCaption())
+            return true;
+        if (node.GetName().empty())
+            return true;
+        if (!node.GetParent())
+            return false;
+        if (node.GetParent()->TryGetAttribute<Attributes::TupleAttribute>() != nullptr)
+            return true;
+        if (node.TryGetAspect<Controls::FunctionArgumentAspect>() == nullptr)
+            return true;
+        return false;
+    }
+
+    void ControlNodeHeaderAspectHandler::Connect(const std::shared_ptr<ControlNode>& node, const std::shared_ptr<Layout::ControlElement>& element)
 	{
 		if (element->GetTypeInfo().IsValid())
 			node->InitializeType(element->GetTypeInfo(), false);
-		node->SetName(element->GetName());
-		node->SetCaption(element->GetCaption());
+        node->SetCaption(element->GetCaption());
+        if (CanSetName(*node, *element))
+            node->SetName(element->GetName());
+        else if (!element->GetName().empty())
+            node->SetCaption(element->GetName());
 		if (element->GetAttribtes())
 			node->SetCustomAttributeCollection(Attributes::AttributeCollection(*element->GetAttribtes()));
 		element->SetControlNode(node);

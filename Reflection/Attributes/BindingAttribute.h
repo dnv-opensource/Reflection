@@ -16,8 +16,11 @@ namespace DNVS {namespace MoFa { namespace Reflection { namespace Attributes {
 
     namespace Impl {
         class ForceBinding {};
+        class BindToExisting {};
     }
     constexpr Impl::ForceBinding ForceBinding;
+    //Only bind if the bind expression represents existing data, such as an existing beam or similar. Do not bind if the expression represents for example a constructor expression.
+    constexpr Impl::BindToExisting BindToExisting;
 
     class BindingAttribute 
         : public FunctionCallbackAttribute<Variants::Variant>
@@ -27,12 +30,14 @@ namespace DNVS {namespace MoFa { namespace Reflection { namespace Attributes {
         template<typename BindingControlFunction, typename... StringArguments>
         BindingAttribute(BindingControlFunction bindingControlFunction, StringArguments&&... stringArguments)
             : m_forceBinding(false)
+            , m_bindToExisting(false)
         {
             InitializeFunction(this, bindingControlFunction, std::forward<StringArguments>(stringArguments)...);
         }
         template<typename BindingControlFunction, typename... StringArguments>
         BindingAttribute(const TypeLibraries::TypeLibraryPointer& typeLibrary, BindingControlFunction bindingControlFunction, StringArguments&&... stringArguments)
             : m_forceBinding(false)
+            , m_bindToExisting(false)
         {
             InitializeFunction(this, typeLibrary, bindingControlFunction, std::forward<StringArguments>(stringArguments)...);
         }
@@ -41,6 +46,12 @@ namespace DNVS {namespace MoFa { namespace Reflection { namespace Attributes {
             : BindingAttribute(std::forward<Args>(args)...)
         {
             InitializeArguments(forceBinding);
+        }
+        template<typename... Args>
+        BindingAttribute(Impl::BindToExisting bindToExisting, Args&&... args)
+            : BindingAttribute(std::forward<Args>(args)...)
+        {
+            InitializeArguments(bindToExisting);
         }
         Variants::Variant Get(const std::vector<Objects::Object>& arguments) const
         {
@@ -52,6 +63,11 @@ namespace DNVS {namespace MoFa { namespace Reflection { namespace Attributes {
             m_forceBinding = true;
             InitializeArguments(std::forward<Args>(args)...);
         }
+        template<typename... Args>
+        void InitializeArguments(Impl::BindToExisting bindToExisting, Args&&... args) {
+            m_bindToExisting = true;
+            InitializeArguments(std::forward<Args>(args)...);
+        }
         template<typename NotifyCallback, typename = std::enable_if_t<TypeUtilities::HasConvertibleSignature<NotifyCallback, TypeUtilities::AnyType(const std::function<void()>&)>>>
         void InitializeArguments(NotifyCallback notifyCallback) {
             typedef typename TypeUtilities::FunctionTraits<NotifyCallback>::ReturnType ReturnType;
@@ -61,6 +77,7 @@ namespace DNVS {namespace MoFa { namespace Reflection { namespace Attributes {
             };
         }
         bool ForceBinding() const { return m_forceBinding; }
+        bool BindToExisting() const { return m_bindToExisting; }
         Variants::Variant ConnectNotifications(const std::function<void()>& fn) const
         {
             if (m_notifyCallback)
@@ -70,6 +87,7 @@ namespace DNVS {namespace MoFa { namespace Reflection { namespace Attributes {
         }
     private:
         bool m_forceBinding;
+        bool m_bindToExisting;
         std::function<Reflection::Variants::Variant(const std::function<void()>&)> m_notifyCallback;
     };
 }}}}

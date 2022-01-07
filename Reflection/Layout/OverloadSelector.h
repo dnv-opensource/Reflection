@@ -6,7 +6,6 @@
 //  http://www.boost.org/LICENSE_1_0.txt
 #include "CollectionOfElements.h"
 #include "ElementWithOneChild.h"
-#include "LayoutContext.h"
 #include "Reflection/Members/IMember.h"
 #include "Reflection/Controls\ControlNode.h"
 #include <set>
@@ -50,8 +49,6 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
             return std::set<Members::MemberPointer>(m_members.begin(), m_members.end());
         }
         const std::list<Members::MemberPointer>& GetOrderedMembers() const {return m_members;}
-        LayoutContext& GetContext() { return m_context; }
-        const LayoutContext& GetContext() const { return m_context; }
         const std::string& GetName() const { return m_name; }
         void SetName(const std::string& name) { m_name = name; }
         const std::string& GetCaption() const { return m_caption; }
@@ -83,7 +80,6 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
     private:
         std::list<Members::MemberPointer> m_members;
         std::shared_ptr<Controls::ControlNode> m_controlNode;
-        LayoutContext m_context;
         std::string m_name;
         std::string m_caption;
     };

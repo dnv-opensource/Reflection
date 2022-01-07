@@ -11,7 +11,7 @@
 #include "Reflection/Attributes/ExpandMemberAttribute.h"
 #include "Reflection/Attributes/CaptionAttribute.h"
 #include "Vector3d.h"
-#include "Reflection/Attributes/SaveFileAttribute.h"
+#include "Reflection/Attributes/FileAttribute.h"
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { namespace Tests {
     enum MyEnumForLayout2
     {
@@ -55,6 +55,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { nam
     class MyTestClassForLayout {
     public:
         MyTestClassForLayout(double, MyEnumForLayout2, MyEnumForLayout4) {}
+        double GetB() const { throw; }
         double GetA() const { throw; }
         MyEnumForLayout2 GetEnum1() const { throw; }
         MyEnumForLayout4 GetEnum2() const { throw; }
@@ -231,13 +232,13 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Attributes { nam
         {
             cls.Function("DoExport", &FileExporter::DoExport)
                 .AddSignature("fileName")
-                .AddAttribute<SaveFileAttribute>(FileType("js", "Javascript files"), JournallingRequired);
+                .AddAttribute<FileAttribute>(FileMode::Save, FileType("js", "Javascript files"), JournallingRequired);
         }
         else
         {
             cls.Function("DoExport", &FileExporter::DoExport)
                 .AddSignature("fileName")
-                .AddAttribute<SaveFileAttribute>(FileType("js", "Javascript files"));
+                .AddAttribute<FileAttribute>(FileMode::Save, FileType("js", "Javascript files"));
         }
     }
 }}}}}

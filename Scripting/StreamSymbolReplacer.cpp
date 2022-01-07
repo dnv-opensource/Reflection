@@ -13,7 +13,8 @@ namespace DNVS { namespace MoFa { namespace Scripting {
         : m_replacer(replacer)
         , m_bufSize(strBufSize)
     {
-
+        if(m_replacer)
+            m_replacer->Reset();
     }
 
     std::istream& StreamSymbolReplacer::TryReplace(std::istream& stream)

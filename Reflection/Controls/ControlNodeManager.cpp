@@ -31,7 +31,7 @@
 #include "Handlers/ControlNodeLayoutGroupBoxHandler.h"
 #include "Handlers/ControlNodeGroupAttributeHandler.h"
 #include "Handlers/ControlNodeLayoutDropdownButtonHandler.h"
-#include "Handlers/ControlNodeSaveFileAttributeHandler.h"
+#include "Handlers/ControlNodeFileAttributeHandler.h"
 #include "Handlers/ControlNodeLambdaPropertyAspectHandler.h"
 #include "Handlers/ControlNodeLayoutSelectorLookupHandler.h"
 #include "Handlers/ControlNodeHeaderAspectHandler.h"
@@ -47,14 +47,14 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
         m_handlers.emplace_back(new ControlNodeLambdaPropertyAspectHandler);
         //Eliminate deprecated nodes.
         m_handlers.emplace_back(new ControlNodeDeprecatedAttributeHandler);
-        //Handles symmetry attributes by adding the SymmetryAspect to this node.
-        m_handlers.emplace_back(new ControlNodeSymmetryAttributeHandler);
         //Handles FunctionSelectorAttribute
         m_handlers.emplace_back(new ControlNodeFunctionSelectorAttributeHandler);
         //Handles property members and adds the PropertyAspect
         m_handlers.emplace_back(new ControlNodePropertyHandler);
         //Handles constructor members and adds the ConstructorAspect 
         m_handlers.emplace_back(new ControlNodeConstructorHandler);
+        //Handles symmetry attributes by adding the SymmetryAspect to this node.
+        m_handlers.emplace_back(new ControlNodeSymmetryAttributeHandler);
         //Handles the NameAttribute - Sets the name __this__ to the current node.
         m_handlers.emplace_back(new ControlNodeNameAttributeHandler);
         //Handles OverloadSelector in LayoutAttribute. Adds ConstructorSelectorAspect
@@ -65,28 +65,28 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
         m_handlers.emplace_back(new ControlNodeLayoutSelectorHandler);
         //Handles SelectorLookup
         m_handlers.emplace_back(new ControlNodeLayoutSelectorLookupHandler);
+        //Handles ExpandMemberAttribute and adds ConstructorSelectorAspect.
+        m_handlers.emplace_back(new ControlNodeExpandMemberAttributeHandler);
+        //Adds default initialization of the type of the node
+        m_handlers.emplace_back(new ControlNodeTypeHandler);
         //Handles ControlElements in LayoutAttribute.
         m_handlers.emplace_back(new ControlNodeLayoutControlElementHandler);
         //Handles a DropdownButton layout element - Adds the ExpandActionAspect.
         m_handlers.emplace_back(new ControlNodeLayoutDropdownButtonHandler);
-        //Handles ExpandMemberAttribute and adds ConstructorSelectorAspect.
-        m_handlers.emplace_back(new ControlNodeExpandMemberAttributeHandler);
         //Handles group boxes - Adds a GroupAspect if you have a named GroupBox in your layout.
         m_handlers.emplace_back(new ControlNodeLayoutGroupBoxHandler);
-		//If no type is given from node, sets the type from the BindingAttribute
+        //If no type is given from node, sets the type from the BindingAttribute
 		m_handlers.emplace_back(new ControlNodeBindingAttributeHandler);
         //Handles GroupAttribute - Adds a GroupAspect if you have a named GroupBox in your layout.
         m_handlers.emplace_back(new ControlNodeGroupAttributeHandler);
         //Handles GroupEnablerAttribyte - Adds a GroupEnablerAspect. Only works if you have a GroupAspect on your node.
         m_handlers.emplace_back(new ControlNodeGroupEnablerAttributeHandler);
-        //Adds default initialization of the type of the node
-        m_handlers.emplace_back(new ControlNodeTypeHandler);
         //Handles the RecordAttribute on a given member - Adds new child nodes for each of the records referenced from this handler.
         m_handlers.emplace_back(new ControlNodeRecordAttributeHandler);
         //Fallback - for all other functions - add support for calling that function. Adds a FunctionAspect and adds child arguments.
         m_handlers.emplace_back(new ControlNodeFunctionHandler);
-        //Handles the SaveFileAttribute.
-        m_handlers.emplace_back(new ControlNodeSaveFileAttributeHandler);
+        //Handles the FileAttribute.
+        m_handlers.emplace_back(new ControlNodeFileAttributeHandler);
         //Handles the CaptionAttribute - Sets a caption on the node
         m_handlers.emplace_back(new ControlNodeCaptionAttributeHandler);
         //Adds the RootAspect to the root onde (the one without parents)

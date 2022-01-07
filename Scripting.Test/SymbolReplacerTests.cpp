@@ -108,7 +108,6 @@ namespace DNVS  {namespace MoFa {namespace Scripting {
         std::stringstream strm(text);
 
         char resultStr[30];
-        memset(resultStr, 0, 30);
         strmReplacer.TryReplace(strm).read(resultStr, 30);
 
         EXPECT_EQ(std::string(resultStr), "\"This is text\" XArray[101]");

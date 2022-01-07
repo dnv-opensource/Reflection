@@ -14,6 +14,7 @@
 #include "Reflection/Attributes/UtilityClassAttribute.h"
 #include "Reflection/Attributes/GenerateConstructorArgumentsAttribute.h"
 #include "Formatting/DefaultFormatterRules.h"
+#include "../Attributes/TitleAttribute.h"
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Utilities {    
 
@@ -156,20 +157,21 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Utilities {
         auto rules = formattingService.GetFormatterOrDefault<Formatting::IFormatterRules, Formatting::DefaultFormatterRules>();
         if (!item.GetMember())
             return "null";
-        if (!rules->RequireValidScript())
+        if (item.GetMember()->GetAttributeCollection().HasAttribute<Attributes::ActionAttribute>())
         {
-            if (item.GetMember()->GetAttributeCollection().HasAttribute<Attributes::ActionAttribute>())
-            {
-                return item.GetMember()->GetAttributeCollection().GetAttribute<Attributes::ActionAttribute>().GetName();
-            }
-            if (item.GetMember()->GetAttributeCollection().HasAttribute<Attributes::CaptionAttribute>())
-            {
-                return item.GetMember()->GetAttributeCollection().GetAttribute<Attributes::CaptionAttribute>().GetCaption();
-            }
-            else if (item.GetMember()->GetMemberType() & Members::MemberType::TypePropertyGetSet)
-            {
-                return item.GetMember()->GetName();
-            }
+            return item.GetMember()->GetAttributeCollection().GetAttribute<Attributes::ActionAttribute>().GetName();
+        }
+        if (item.GetMember()->GetAttributeCollection().HasAttribute<Attributes::TitleAttribute>())
+        {
+            return item.GetMember()->GetAttributeCollection().GetAttribute<Attributes::TitleAttribute>().GetTitle();
+        }
+        if (item.GetMember()->GetAttributeCollection().HasAttribute<Attributes::CaptionAttribute>())
+        {
+            return item.GetMember()->GetAttributeCollection().GetAttribute<Attributes::CaptionAttribute>().GetCaption();
+        }
+        else if (item.GetMember()->GetMemberType() & Members::MemberType::TypePropertyGetSet)
+        {
+            return item.GetMember()->GetName();
         }
         std::vector<std::string> arguments;
         for (size_t i = 0; i < item.GetMember()->GetArity(); ++i)

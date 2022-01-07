@@ -53,6 +53,11 @@ std::string SymbolReplacer::GetSymbol() const
     return m_symbol;
 }
 
+void SymbolReplacer::Reset()
+{
+    m_previousGotStuckInText = empty;
+}
+
 // Symbols inside JS text should not be replaced, so the intervals finds everything outside JS strings
 list<pair<size_t, size_t>> SymbolReplacer::FindSearchIntervals(const string& text)
 {
@@ -138,6 +143,17 @@ size_t SymbolReplacer::findEndQuotation(const std::string& text, size_t start, b
     return end;
 }
 
+bool IsMatchingSymbol(const std::string& text, const std::string& id)
+{
+    if (id.empty())
+    {
+        if (!text.empty() && !isalpha(text.at(0)))
+            return true;
+        else
+            return false;
+    }
+    return text.substr(0, id.size()) == id;
+}
 std::string SymbolReplacer::ReplaceTextInInterval(const std::string& text, std::pair<size_t, size_t> interval)
 {
     string textInInterval = text.substr(interval.first, interval.second-interval.first);
@@ -159,7 +175,7 @@ std::string SymbolReplacer::ReplaceTextInInterval(const std::string& text, std::
             for (int i = 0; i < m_handlers.size(); ++i)
             {
                 const string& id = m_identifiers[i];
-                if (nextStr.substr(0, id.size()) == id)
+                if(IsMatchingSymbol(nextStr, id))
                 {
                     nextStr = nextStr.substr(id.size()); // filter away identifier
                     size_t nextPos;

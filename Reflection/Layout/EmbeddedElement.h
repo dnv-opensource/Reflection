@@ -6,7 +6,6 @@
 //  http://www.boost.org/LICENSE_1_0.txt
 #include "ILayoutElement.h"
 #include "TypedLayoutElement.h"
-#include "LayoutContext.h"
 #include "ElementWithOneChild.h"
 #include "Reflection/Controls/ControlNode.h"
 
@@ -34,8 +33,6 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
         {}
         const std::string& GetName() const { return m_name; }
         void SetName(const std::string& name) { m_name = name; }
-        LayoutContext& GetContext() { return m_context; }
-        const LayoutContext& GetContext() const { return m_context; }
         bool IsProxy() const { return m_isProxy; }
         void SetProxy(bool proxy) { m_isProxy = proxy; }
         std::shared_ptr<Controls::ControlNode> TryGetMatchingControlNode(const std::shared_ptr<Controls::ControlNode>& controlNode)
@@ -63,7 +60,6 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
         std::shared_ptr<Controls::ControlNode> m_controlNode;
         bool m_isProxy;
         std::string m_name;
-        LayoutContext m_context;
     };
 
 }}}}

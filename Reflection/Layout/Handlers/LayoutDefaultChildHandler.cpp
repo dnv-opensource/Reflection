@@ -8,6 +8,7 @@
 #include "Contexts/ILayoutControlContext.h"
 #include "GroupCreators/ILayoutElementGroupCreator.h"
 #include "Reflection/Controls/Aspects/ConstructorAspect.h"
+#include "../../Attributes/UtilityClassAttribute.h"
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
 
@@ -24,7 +25,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
             auto groupCreator = context.GetManager()->CreateGroupCreator(controlNode);
             if (!groupCreator)
                 return layoutElement;
-            if (autoControl->GetControlNode())
+            if (autoControl->GetControlNode() && !autoControl->GetControlNode()->TryGetAttribute<Attributes::UtilityClassAttribute>())
                 groupCreator->AddLayoutElement(layoutElement, autoControl->GetControlNode());
             for (const auto& child : controlNode->GetChildren())
             {

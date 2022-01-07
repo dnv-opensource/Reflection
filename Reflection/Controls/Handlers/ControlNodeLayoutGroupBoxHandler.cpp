@@ -6,13 +6,17 @@
 #include "ControlNodeLayoutGroupBoxHandler.h"
 #include "Reflection/Controls/Aspects/GroupAspect.h"
 #include "Reflection/Attributes/GroupAttribute.h"
+#include "GroupAspectAdder.h"
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 
     bool ControlNodeLayoutGroupBoxHandler::OnInitialize(ControlNode& node, const std::shared_ptr<Layout::GroupBox>& element, bool priorState)
     {
         if (!node.TryGetAttribute<Attributes::GroupAttribute>() && !element->GetName().empty())
+        {
             node.AddAspect<GroupAspect>(element->GetName());
+            GroupAspectAdder(element->GetName()).OnInitialize(node, element, priorState);
+        }
         return priorState;
     }
 

@@ -23,6 +23,7 @@ namespace DNVS { namespace MoFa { namespace Scripting {
         virtual std::string& Replace(const std::string& text);
         virtual std::string& Replace(const char* text, size_t length);
         std::string GetSymbol() const;
+        void Reset();
     private:
         std::list<std::pair<size_t,size_t>> FindSearchIntervals(const std::string& text);
         std::string ReplaceTextInInterval(const std::string& text, std::pair<size_t, size_t> interval);

@@ -34,7 +34,8 @@ namespace DNVS { namespace MoFa { namespace Reflection { namespace Attributes {
         }
         //Last argument is required to be convertible to void(const std::string&)
         template<typename Callback,typename... Args, typename = std::enable_if_t<TypeUtilities::IsCallable<Callback>>>
-        ScriptExpressionAttribute(Callback callback, Args&&... args)            
+        ScriptExpressionAttribute(Callback callback, Args&&... args)      
+            : ScriptExpressionAttribute()
         {
             InitializeFunction(this, callback, std::forward<Args>(args)...);
         }

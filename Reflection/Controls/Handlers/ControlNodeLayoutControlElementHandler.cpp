@@ -6,9 +6,11 @@
 #include "ControlNodeLayoutControlElementHandler.h"
 #include "ControlNodeHandlerUtilities.h"
 #include "Reflection/Controls/Aspects/CustomAttributeCollectionAspect.h"
+#include "Reflection/Controls/Aspects/PropertyAspect.h"
 #include "Reflection/Attributes/ContainerAttribute.h"
 #include "Reflection/Controls/Aspects/HeaderAspect.h"
-#include "../Aspects/CanAddAndRemoveRowsAspect.h"
+#include "Reflection/Controls/Aspects/CanAddAndRemoveRowsAspect.h"
+#include "ControlNodeHeaderAspectHandler.h"
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 
@@ -27,11 +29,19 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 			memberPair.first->AddChild(child);
             return priorState;
         }
+        if (auto child = GetOrCreateNestedNode(node, element))
+        {
+            SetData(*child, *element);
+            return priorState;
+        }
 		if (element->GetTypeInfo().IsValid())
 		{
-			auto child = std::make_shared<ControlNode>(&node, element->GetTypeInfo());
-			SetData(*child, *element);
-			node.AddChild(child);
+            ControlNode* parent = &node;
+            if (node.TryGetAspect<PropertyAspect>() && node.GetParent())
+                parent = node.GetParent();
+            auto child = std::make_shared<ControlNode>(parent, element->GetTypeInfo());
+            SetData(*child, *element, true);
+			parent->AddChild(child);
 			return priorState;
 		}
         if (element->GetCaption() == "__USENAME__")
@@ -73,7 +83,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 		return priorState;
 	}
 
-	void ControlNodeLayoutControlElementHandler::SetData(ControlNode& node, const Layout::ControlElement& element)
+	void ControlNodeLayoutControlElementHandler::SetData(ControlNode& node, const Layout::ControlElement& element, bool forceName)
     {
         if (element.GetCaption() == "__USENAME__")
         {
@@ -82,7 +92,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
         }
         else
             node.SetCaption(element.GetCaption());
-		if (node.GetName().empty())
+		if (node.GetName().empty() || forceName)
 			node.SetName(element.GetName());
 		if (element.GetTypeInfo().IsValid())
 			node.InitializeType(element.GetTypeInfo(), false);
@@ -93,14 +103,15 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
 
 	void ControlNodeLayoutControlElementHandler::SetGridData(ControlNode& node, const Layout::Grid& element)
 	{
-		SetData(node, element);
-		if (!element.GetFixedGrid())
+        SetData(node, element);
+        if (!element.GetFixedGrid())
 		{
 			node.AddAspect<HeaderAspect>(element.GetHeader());
-		}
+            ControlNodeHeaderAspectHandler().OnInitialize(node, true);
+        }
 		if (element.GetCanAddRemoveRows())
 			node.AddAspect<CanAddAndRemoveRowsAspect>();
-	}
+    }
 
 }}}}
 

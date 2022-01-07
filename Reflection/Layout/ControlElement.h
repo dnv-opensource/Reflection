@@ -7,7 +7,6 @@
 #include <string>
 #include "TypedLayoutElement.h"
 #include "ILayoutElement.h"
-#include "LayoutContext.h"
 #include "Reflection/Attributes/AttributeCollection.h"
 #include "Reflection/Controls/ControlNode.h"
 
@@ -38,8 +37,6 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
         bool HasCaption() const { return m_caption != "__USENAME__"; }
 		void SetTypeInfo(const Types::DecoratedTypeInfo& typeInfo) { m_typeInfo = typeInfo; }
 		const Types::DecoratedTypeInfo& GetTypeInfo() const { return m_typeInfo; }
-        LayoutContext& GetContext() { return m_context; }
-        const LayoutContext& GetContext() const { return m_context; }
         void SetAttributeCollection(const Attributes::AttributeCollection& collection) { m_attributeCollection = &collection; }
         const Attributes::AttributeCollection& GetAttributeCollection() const 
         {
@@ -90,7 +87,6 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
         std::string m_name;
         std::string m_caption;
 		Types::DecoratedTypeInfo m_typeInfo;
-        LayoutContext m_context;
         const Attributes::AttributeCollection* m_attributeCollection;
     };
 }}}}

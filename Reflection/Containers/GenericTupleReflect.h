@@ -10,6 +10,7 @@
 #include "../Attributes/TupleAttribute.h"
 #include "../Variants/VariantService.h"
 #include "../Attributes/GenerateConstructorArgumentsAttribute.h"
+#include "../Attributes/AttributeCollectionService.h"
 
 namespace DNVS { namespace MoFa { namespace Reflection {
 
@@ -183,7 +184,7 @@ namespace DNVS { namespace MoFa { namespace Reflection {
 	void ReflectConstTuple(const TypeLibraries::TypeLibraryPointer& typeLibrary)
 	{
 		using namespace Classes;
-		Class<TupleT, IgnoreAutoReflector, std::unique_ptr<TupleT>> cls(typeLibrary, "Tuple");
+		Class<TupleT, IgnoreAutoReflector, TupleT> cls(typeLibrary, "Tuple");
 		cls.AddAttribute<TupleAttribute>(TypeId<NonConstTupleT>(), (TupleT*)nullptr);
 		
 		typeLibrary->GetConversionGraph()->AddAlternativeConverter(Types::TypeId<TupleT>(), std::make_shared<AlternativeTupleConverter>(typeLibrary, cls.GetType()->GetAttributeCollection().GetAttribute<TupleAttribute>()));
@@ -199,7 +200,7 @@ namespace DNVS { namespace MoFa { namespace Reflection {
 	{
 		using namespace Classes;
 		ReflectConstTuple<TupleT, TupleT>(typeLibrary);
-		Class<TupleT, IgnoreAutoReflector, std::unique_ptr<TupleT>> cls(typeLibrary, "Tuple");
+		Class<TupleT, IgnoreAutoReflector, TupleT> cls(typeLibrary, "Tuple");
 		cls.Constructor();		
 		cls.Function("Set", [](TupleT& tuple, size_t index, const Objects::Object& object)
 		{

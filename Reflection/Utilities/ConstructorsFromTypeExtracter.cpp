@@ -15,6 +15,7 @@
 #include "Reflection/Attributes/SerializationAttribute.h"
 #include "ConstructorSelector.h"
 #include "CallableConstructor.h"
+#include "../TypeLibraries/ExtendedTypeTraits.h"
 
 
 namespace DNVS {namespace MoFa {namespace Reflection {namespace Utilities {    
@@ -146,8 +147,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Utilities {
     {
         if (!IsConstructorMember(overload, allowAll))
             return false;
-        auto conversionSequence = overload->GetConversionGraph()->GetConversionSequence(overload->GetReturnType(), decoratedTypeInfo);
-        if (conversionSequence && conversionSequence->IsValid() && conversionSequence->Quality() < TypeConversions::ArgumentConversionQuality(TypeConversions::ConversionType::Type::UserConversion))
+		if(TypeLibraries::ExtendedTypeTraits(m_typeLibrary).IsBaseOf(decoratedTypeInfo.GetTypeInfo(), overload->GetReturnType().GetTypeInfo()))
         {
             return true;
         }

@@ -31,7 +31,6 @@ namespace DNVS {namespace MoFa {namespace Units {
     public:
         Quantity(const Quantity& other) : BaseClass(other) {}
         Quantity(const NamedLength& other) : BaseClass(other) {}
-        Quantity(const QuantityBase<LengthDimension>& other) : BaseClass(other) {}
         explicit Quantity(double value) : BaseClass(value) {}
         Quantity(){}
         Quantity& operator=(const Quantity& other) {BaseClass::operator=(other); return *this; }

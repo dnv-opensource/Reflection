@@ -91,7 +91,7 @@ namespace DNVS { namespace MoFa { namespace Scripting {
         {
             jsScopedDummyMode dummyMode;
             ConversionSequencePointer conversionSequence = m_conversionGraph->GetConversionSequence(from, to);
-            if (conversionSequence->IsValid())
+            if (conversionSequence && conversionSequence->IsValid())
                 return std::make_shared<jsDummyConversionSequence>(conversionSequence);
             else
                 return conversionSequence;

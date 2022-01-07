@@ -11,7 +11,8 @@ namespace DNVS { namespace MoFa { namespace Services {
         TCHAR tempBuffer[MAX_PATH];
         std::string testPath;
         EXPECT_TRUE(GetModuleFileName(nullptr, tempBuffer, MAX_PATH));
-        testPath = std::string(tempBuffer);
+        std::wstring wPath(tempBuffer);
+        testPath = std::string(wPath.begin(), wPath.end());
         testPath = testPath.substr(0, testPath.find_last_of("\\"));
         TempFolderPathUtility tempFolderPathUtility([](const std::string & str) {return true; });
         EXPECT_EQ(testPath, tempFolderPathUtility.GetWritablePath());

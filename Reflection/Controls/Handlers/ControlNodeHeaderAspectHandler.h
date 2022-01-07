@@ -16,6 +16,7 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Controls {
     public:
         bool OnInitialize(ControlNode& node, bool priorState = false) override;
 	private:
+        bool CanSetName(ControlNode& node, const Layout::ControlElement& element) const;
 		void Connect(const std::shared_ptr<ControlNode>& node, const std::shared_ptr<Layout::ControlElement>& element);
     };
 }}}}

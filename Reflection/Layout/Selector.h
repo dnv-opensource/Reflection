@@ -26,7 +26,6 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Layout {
         template<typename T>
         Selector(const std::shared_ptr<T>& element, bool setCaptionEqualsName = true, std::enable_if_t<std::is_base_of_v<ControlElement, T>, void*> = nullptr) : TypedLayoutElement<Selector, ElementWithOneChild>(element)
         {
-            element->GetContext().type = Types::TypeId<Utilities::MemberItem>();
             if(setCaptionEqualsName)
                 element->SetCaption(element->GetName());
         }

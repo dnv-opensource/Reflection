@@ -34,6 +34,8 @@ namespace DNVS {namespace MoFa {namespace Reflection {namespace Utilities {
             TypedMemberUtilities utils(typeLibrary, Types::TypeId<R>());
             return utils.GetConstructor<Args...>(m_name);
         }
+    private:
+        std::string m_name;
     };
 
 
